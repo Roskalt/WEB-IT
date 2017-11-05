@@ -1,0 +1,2676 @@
+user1@lab:~$ touch myscript
+
+user1@lab:~$ ls -l
+total 8
+-rw-rw-r-- 1 user1 user1  0 Nov  5 17:16 myscript
+-rw------- 1 user1 user1  2 Oct 27 07:41 nano.save
+-rw-rw-r-- 1 user1 user1  0 Nov  4 18:45 pids
+-rw-rw-r-- 1 user1 user1  0 Oct 20 09:29 test.sh
+-rwxrwxr-x 1 user1 user1 26 Oct 27 07:24 text
+
+user1@lab:~$ chmod +x ./myscript
+
+user1@lab:~$ ls -l
+total 8
+-rwxrwxr-x 1 user1 user1  0 Nov  5 17:16 myscript
+-rw------- 1 user1 user1  2 Oct 27 07:41 nano.save
+-rw-rw-r-- 1 user1 user1  0 Nov  4 18:45 pids
+-rw-rw-r-- 1 user1 user1  0 Oct 20 09:29 test.sh
+-rwxrwxr-x 1 user1 user1 26 Oct 27 07:24 text
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3              File: ./myscript                        Modified
+
+#!/bin/bash
+# This is a comment
+
+pwd
+whoami
+
+user1@lab:~$ ./myscript
+/home/user1
+user1
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3              File: ./myscript                        Modified
+
+#!/bin/bash
+# our comment is here
+
+echo "The current directory is:"
+pwd
+echo "The user logged in is:"
+whoami
+
+user1@lab:~$ ./myscript
+The current directory is:
+/home/user1
+The user logged in is:
+user1
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3              File: ./myscript                        Modified
+
+#!/bin/bash
+# display user home
+
+echo "Home for the current user is: $HOME"
+
+user1@lab:~$ ./myscript
+Home for the current user is: /home/user1
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3              File: ./myscript                        Modified
+
+#!/bin/bash
+
+echo "I have $1 in my pocket"
+echo "I have \$1 in my pocket"
+
+user1@lab:~$ ./myscript
+I have  in my pocket
+I have $1 in my pocket
+
+user1@lab:~$ ./myscript web
+I have web in my pocket
+I have $1 in my pocket
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+# testing variables
+
+grade=5
+person="Adam"
+echo "$person is a good boy, he is in grade $grade"
+
+user1@lab:~$ ./myscript
+Adam is a good boy, he is in grade 5
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3              File: ./myscript                        Modified
+
+#!/bin/bash
+
+mydir=`pwd`
+echo $mydir
+
+mydir1=$(pwd)
+echo $mydir1
+
+user1@lab:~$ ./myscript
+/home/user1
+/home/user1
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+var1=$(( 5 + 5 ))
+echo $var1
+var2=$(( $var1 * 2 ))
+echo $var2
+
+user1@lab:~$ ./myscript
+10
+20
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+if pwd
+then
+echo "It works"
+fi
+
+user1@lab:~$ ./myscript
+/home/user1
+It works
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+user=user1
+
+if grep $user /etc/passwd
+then
+echo "The user $user Exists"
+fi
+
+user1@lab:~$ ./myscript
+user1:x:1000:1000::/home/user1:/bin/bash
+user10:x:1009:1009::/home/user10:/bin/bash
+The user user1 Exists
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+user=anotherUser
+
+if grep $user /etc/passwd
+then
+echo "The user $user Exists"
+else
+echo "The user $user doesn't exist"
+fi
+
+user1@lab:~$ ./myscript
+The user anotherUser doesn't exist
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+user=anotherUser
+
+if grep $user /etc/passwd
+then
+echo "The user $user Exists"
+elif ls /home
+then
+echo "The user doesn't exist but anyway there is a directory under /home"
+fi
+
+user1@lab:~$ ./myscript
+user1  user10  user2  user3  user4  user5  user6  user7  user8  user9
+The user doesn't exist but anyway there is a directory under /home
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+val1=6
+if [ $val1 -gt 5 ]
+then
+echo "The test value $val1 is greater than 5"
+else
+echo "The test value $val1 is not greater than 5"
+fi
+
+user1@lab:~$ ./myscript
+The test value 6 is greater than 5
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+user="user1"
+
+if [ $user = $USER ]
+then
+echo "The user $user is the current logged in user"
+fi
+
+user1@lab:~$ ./myscript
+The user user1 is the current logged in user
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+val1=text
+val2="another text"
+
+if [ $val1 \> $val2 ]
+then
+echo "$val1 is greater than $val2"
+else
+echo "$val1 is less than $val2"
+fi
+
+user1@lab:~$ ./myscript
+./myscript: line 6: [: too many arguments
+text is less than another text
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+val1=text
+val2="another text"
+
+if [ $val1 \> "$val2" ]
+then
+echo "$val1 is greater than $val2"
+else
+echo "$val1 is less than $val2"
+fi
+
+user1@lab:~$ ./myscript
+text is greater than another text
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+val1=User1
+val2=user1
+
+if [ $val1 \> $val2 ]
+then
+echo "$val1 is greater than $val2"
+else
+echo "$val1 is less than $val2"
+fi
+
+user1@lab:~$ ./myscript
+User1 is less than user1
+
+user1@lab:~$ echo -e "User1\nuser1\nWeb\nIT\nprograming\n2017\n.." > ./myfile
+
+user1@lab:~$ ls -l
+total 16
+-rw-rw-r-- 1 user1 user1  38 Nov  5 19:15 myfile
+-rwxrwxr-x 1 user1 user1 138 Nov  5 18:54 myscript
+-rw------- 1 user1 user1   2 Oct 27 07:41 nano.save
+-rw-rw-r-- 1 user1 user1   0 Nov  4 18:45 pids
+-rw-rw-r-- 1 user1 user1   0 Oct 20 09:29 test.sh
+-rwxrwxr-x 1 user1 user1  26 Oct 27 07:24 text
+
+user1@lab:~$ cat ./myfile
+User1
+user1
+Web
+IT
+programing
+2017
+..
+user1@lab:~$ sort ./myfile
+..
+2017
+IT
+User1
+Web
+programing
+user1
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+mydir=/home/user1
+
+if [ -d $mydir ]
+then
+echo "The $mydir directory exists"
+cd $mydir
+ls
+else
+echo "The $mydir directory does not exist"
+fi
+
+user1@lab:~$ ./myscript
+The /home/user1 directory exists
+myfile  myscript  nano.save  pids  test.sh  text
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+for var in first second third fourth fifth
+do
+echo The $var item
+done
+
+user1@lab:~$ ./myscript
+The first item
+The second item
+The third item
+The fourth item
+The fifth item
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+for var in first "the second" "the third" "I'll do it"
+do
+echo "This is: $var"
+done
+
+user1@lab:~$ ./myscript
+This is: first
+This is: the second
+This is: the third
+This is: I'll do it
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+file="myfile"
+
+for var in $(cat $file)
+do
+echo " $var"
+done
+
+user1@lab:~$ ./myscript
+ User1
+ user1
+ Web
+ IT
+ programing
+ 2017
+ ..
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+file="/etc/passwd"
+
+IFS=$'\n'
+
+for var in $(cat $file)
+do
+echo " $var"
+done
+
+user1@lab:~$ ./myscript
+ root:x:0:0:root:/root:/bin/bash
+ daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+ bin:x:2:2:bin:/bin:/usr/sbin/nologin
+ sys:x:3:3:sys:/dev:/usr/sbin/nologin
+ sync:x:4:65534:sync:/bin:/bin/sync
+ games:x:5:60:games:/usr/games:/usr/sbin/nologin
+ man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+ lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+ mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+ news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+ uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+ proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+ www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+ backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+ list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+ irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+ gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+ nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+ systemd-timesync:x:100:102:systemd Time Synchronization,,,:/run/systemd:/bin/false
+ systemd-network:x:101:103:systemd Network Management,,,:/run/systemd/netif:/bin/false
+ systemd-resolve:x:102:104:systemd Resolver,,,:/run/systemd/resolve:/bin/false
+ systemd-bus-proxy:x:103:105:systemd Bus Proxy,,,:/run/systemd:/bin/false
+ syslog:x:104:109::/home/syslog:/bin/false
+ _apt:x:105:65534::/nonexistent:/bin/false
+ postfix:x:106:112::/var/spool/postfix:/bin/false
+ sshd:x:107:65534::/var/run/sshd:/usr/sbin/nologin
+ uuidd:x:108:115::/run/uuidd:/bin/false
+ messagebus:x:109:116::/var/run/dbus:/bin/false
+ user1:x:1000:1000::/home/user1:/bin/bash
+ user2:x:1001:1001::/home/user2:/bin/bash
+ user3:x:1002:1002::/home/user3:/bin/bash
+ user4:x:1003:1003::/home/user4:/bin/bash
+ user5:x:1004:1004::/home/user5:/bin/bash
+ user6:x:1005:1005::/home/user6:/bin/bash
+ user7:x:1006:1006::/home/user7:/bin/bash
+ user8:x:1007:1007::/home/user8:/bin/bash
+ user9:x:1008:1008::/home/user9:/bin/bash
+ user10:x:1009:1009::/home/user10:/bin/bash
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+for file in /home/user1/*
+do
+if [ -d "$file" ]
+then
+echo "$file is a directory"
+elif [ -f "$file" ]
+then
+echo "$file is a file"
+fi
+done
+
+user1@lab:~$ ./myscript
+/home/user1/myfile is a file
+/home/user1/myscript is a file
+/home/user1/nano.save is a file
+/home/user1/pids is a file
+/home/user1/test.sh is a file
+/home/user1/text is a file
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+for (( i=1; i <= 10; i++ ))
+do
+echo "number is $i"
+done
+
+user1@lab:~$ ./myscript
+number is 1
+number is 2
+number is 3
+number is 4
+number is 5
+number is 6
+number is 7
+number is 8
+number is 9
+number is 10
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+var1=5
+
+while [ $var1 -gt 0 ]
+do
+echo $var1
+var1=$[ $var1 - 1 ]
+done
+
+user1@lab:~$ ./myscript
+5
+4
+3
+2
+1
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+for (( a = 1; a <= 3; a++ ))
+do
+echo "Start $a:"
+for (( b = 1; b <= 3; b++ ))
+do
+echo " Inner loop: $b"
+done
+done
+
+user1@lab:~$ ./myscript
+Start 1:
+ Inner loop: 1
+ Inner loop: 2
+ Inner loop: 3
+Start 2:
+ Inner loop: 1
+ Inner loop: 2
+ Inner loop: 3
+Start 3:
+ Inner loop: 1
+ Inner loop: 2
+ Inner loop: 3
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+IFS=$'\n'
+
+for entry in $(cat /etc/passwd)
+do
+echo "Values in $entry -"
+IFS=:
+for value in $entry
+do
+echo " $value"
+done
+done
+
+user1@lab:~$ ./myscript
+Values in root:x:0:0:root:/root:/bin/bash -
+ root
+ x
+ 0
+ 0
+ root
+ /root
+ /bin/bash
+Values in daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin -
+ daemon
+ x
+ 1
+ 1
+ daemon
+ /usr/sbin
+ /usr/sbin/nologin
+Values in bin:x:2:2:bin:/bin:/usr/sbin/nologin -
+ bin
+ x
+ 2
+ 2
+ bin
+ /bin
+ /usr/sbin/nologin
+Values in sys:x:3:3:sys:/dev:/usr/sbin/nologin -
+ sys
+ x
+ 3
+ 3
+ sys
+ /dev
+ /usr/sbin/nologin
+Values in sync:x:4:65534:sync:/bin:/bin/sync -
+ sync
+ x
+ 4
+ 65534
+ sync
+ /bin
+ /bin/sync
+Values in games:x:5:60:games:/usr/games:/usr/sbin/nologin -
+ games
+ x
+ 5
+ 60
+ games
+ /usr/games
+ /usr/sbin/nologin
+Values in man:x:6:12:man:/var/cache/man:/usr/sbin/nologin -
+ man
+ x
+ 6
+ 12
+ man
+ /var/cache/man
+ /usr/sbin/nologin
+Values in lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin -
+ lp
+ x
+ 7
+ 7
+ lp
+ /var/spool/lpd
+ /usr/sbin/nologin
+Values in mail:x:8:8:mail:/var/mail:/usr/sbin/nologin -
+ mail
+ x
+ 8
+ 8
+ mail
+ /var/mail
+ /usr/sbin/nologin
+Values in news:x:9:9:news:/var/spool/news:/usr/sbin/nologin -
+ news
+ x
+ 9
+ 9
+ news
+ /var/spool/news
+ /usr/sbin/nologin
+Values in uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin -
+ uucp
+ x
+ 10
+ 10
+ uucp
+ /var/spool/uucp
+ /usr/sbin/nologin
+Values in proxy:x:13:13:proxy:/bin:/usr/sbin/nologin -
+ proxy
+ x
+ 13
+ 13
+ proxy
+ /bin
+ /usr/sbin/nologin
+Values in www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin -
+ www-data
+ x
+ 33
+ 33
+ www-data
+ /var/www
+ /usr/sbin/nologin
+Values in backup:x:34:34:backup:/var/backups:/usr/sbin/nologin -
+ backup
+ x
+ 34
+ 34
+ backup
+ /var/backups
+ /usr/sbin/nologin
+Values in list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin -
+ list
+ x
+ 38
+ 38
+ Mailing List Manager
+ /var/list
+ /usr/sbin/nologin
+Values in irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin -
+ irc
+ x
+ 39
+ 39
+ ircd
+ /var/run/ircd
+ /usr/sbin/nologin
+Values in gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin -
+ gnats
+ x
+ 41
+ 41
+ Gnats Bug-Reporting System (admin)
+ /var/lib/gnats
+ /usr/sbin/nologin
+Values in nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin -
+ nobody
+ x
+ 65534
+ 65534
+ nobody
+ /nonexistent
+ /usr/sbin/nologin
+Values in systemd-timesync:x:100:102:systemd Time Synchronization,,,:/run/systemd:/bin/false -
+ systemd-timesync
+ x
+ 100
+ 102
+ systemd Time Synchronization,,,
+ /run/systemd
+ /bin/false
+Values in systemd-network:x:101:103:systemd Network Management,,,:/run/systemd/netif:/bin/false -
+ systemd-network
+ x
+ 101
+ 103
+ systemd Network Management,,,
+ /run/systemd/netif
+ /bin/false
+Values in systemd-resolve:x:102:104:systemd Resolver,,,:/run/systemd/resolve:/bin/false -
+ systemd-resolve
+ x
+ 102
+ 104
+ systemd Resolver,,,
+ /run/systemd/resolve
+ /bin/false
+Values in systemd-bus-proxy:x:103:105:systemd Bus Proxy,,,:/run/systemd:/bin/false -
+ systemd-bus-proxy
+ x
+ 103
+ 105
+ systemd Bus Proxy,,,
+ /run/systemd
+ /bin/false
+Values in syslog:x:104:109::/home/syslog:/bin/false -
+ syslog
+ x
+ 104
+ 109
+
+ /home/syslog
+ /bin/false
+Values in _apt:x:105:65534::/nonexistent:/bin/false -
+ _apt
+ x
+ 105
+ 65534
+
+ /nonexistent
+ /bin/false
+Values in postfix:x:106:112::/var/spool/postfix:/bin/false -
+ postfix
+ x
+ 106
+ 112
+
+ /var/spool/postfix
+ /bin/false
+Values in sshd:x:107:65534::/var/run/sshd:/usr/sbin/nologin -
+ sshd
+ x
+ 107
+ 65534
+
+ /var/run/sshd
+ /usr/sbin/nologin
+Values in uuidd:x:108:115::/run/uuidd:/bin/false -
+ uuidd
+ x
+ 108
+ 115
+
+ /run/uuidd
+ /bin/false
+Values in messagebus:x:109:116::/var/run/dbus:/bin/false -
+ messagebus
+ x
+ 109
+ 116
+
+ /var/run/dbus
+ /bin/false
+Values in user1:x:1000:1000::/home/user1:/bin/bash -
+ user1
+ x
+ 1000
+ 1000
+
+ /home/user1
+ /bin/bash
+Values in user2:x:1001:1001::/home/user2:/bin/bash -
+ user2
+ x
+ 1001
+ 1001
+
+ /home/user2
+ /bin/bash
+Values in user3:x:1002:1002::/home/user3:/bin/bash -
+ user3
+ x
+ 1002
+ 1002
+
+ /home/user3
+ /bin/bash
+Values in user4:x:1003:1003::/home/user4:/bin/bash -
+ user4
+ x
+ 1003
+ 1003
+
+ /home/user4
+ /bin/bash
+Values in user5:x:1004:1004::/home/user5:/bin/bash -
+ user5
+ x
+ 1004
+ 1004
+
+ /home/user5
+ /bin/bash
+Values in user6:x:1005:1005::/home/user6:/bin/bash -
+ user6
+ x
+ 1005
+ 1005
+
+ /home/user6
+ /bin/bash
+Values in user7:x:1006:1006::/home/user7:/bin/bash -
+ user7
+ x
+ 1006
+ 1006
+
+ /home/user7
+ /bin/bash
+Values in user8:x:1007:1007::/home/user8:/bin/bash -
+ user8
+ x
+ 1007
+ 1007
+
+ /home/user8
+ /bin/bash
+Values in user9:x:1008:1008::/home/user9:/bin/bash -
+ user9
+ x
+ 1008
+ 1008
+
+ /home/user9
+ /bin/bash
+Values in user10:x:1009:1009::/home/user10:/bin/bash -
+ user10
+ x
+ 1009
+ 1009
+
+ /home/user10
+ /bin/bash
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+for var1 in 1 2 3 4 5 6 7 8 9 10
+do
+if [ $var1 -eq 5 ]
+then
+break
+fi
+echo "Number: $var1"
+done
+
+user1@lab:~$ ./myscript
+Number: 1
+Number: 2
+Number: 3
+Number: 4
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+var1=1
+
+while [ $var1 -lt 10 ]
+do
+if [ $var1 -eq 5 ]
+then
+break
+fi
+echo "Iteration: $var1"
+var1=$(( $var1 + 1 ))
+done
+
+user1@lab:~$ ./myscript
+Iteration: 1
+Iteration: 2
+Iteration: 3
+Iteration: 4
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+for (( var1 = 1; var1 < 15; var1++ ))
+do
+if [ $var1 -gt 5 ] && [ $var1 -lt 10 ]
+then
+continue
+fi
+echo "Iteration number: $var1"
+done
+
+user1@lab:~$ ./myscript
+Iteration number: 1
+Iteration number: 2
+Iteration number: 3
+Iteration number: 4
+Iteration number: 5
+Iteration number: 10
+Iteration number: 11
+Iteration number: 12
+Iteration number: 13
+Iteration number: 14
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+for (( a = 1; a < 10; a++ ))
+do
+echo "Number is $a"
+done > myfile.txt
+echo "finished."
+
+user1@lab:~$ ./myscript
+finished.
+
+user1@lab:~$ ls -l
+total 20
+-rw-rw-r-- 1 user1 user1  38 Nov  5 19:15 myfile
+-rw-rw-r-- 1 user1 user1 108 Nov  5 20:22 myfile.txt
+-rwxrwxr-x 1 user1 user1 100 Nov  5 20:21 myscript
+-rw------- 1 user1 user1   2 Oct 27 07:41 nano.save
+-rw-rw-r-- 1 user1 user1   0 Nov  4 18:45 pids
+-rw-rw-r-- 1 user1 user1   0 Oct 20 09:29 test.sh
+-rwxrwxr-x 1 user1 user1  26 Oct 27 07:24 text
+
+user1@lab:~$ cat myfile.txt
+Number is 1
+Number is 2
+Number is 3
+Number is 4
+Number is 5
+Number is 6
+Number is 7
+Number is 8
+Number is 9
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+IFS=:
+
+for folder in $PATH
+do
+echo "$folder:"
+for file in $folder/*
+do
+if [ -x $file ]
+then
+echo " $file"
+fi
+done
+done
+
+user1@lab:~$ ./myscript
+/usr/local/sbin:
+/usr/local/bin:
+/usr/sbin:
+ /usr/sbin/aa-exec
+ /usr/sbin/aa-status
+ /usr/sbin/accessdb
+ /usr/sbin/add-shell
+ /usr/sbin/addgroup
+ /usr/sbin/adduser
+ /usr/sbin/apparmor_status
+ /usr/sbin/arp
+ /usr/sbin/arpd
+ /usr/sbin/biosdecode
+ /usr/sbin/chgpasswd
+ /usr/sbin/chpasswd
+ /usr/sbin/chroot
+ /usr/sbin/cpgr
+ /usr/sbin/cppw
+ /usr/sbin/cron
+ /usr/sbin/delgroup
+ /usr/sbin/deluser
+ /usr/sbin/dmidecode
+ /usr/sbin/dpkg-divert
+ /usr/sbin/dpkg-preconfigure
+ /usr/sbin/dpkg-reconfigure
+ /usr/sbin/dpkg-statoverride
+ /usr/sbin/e2freefrag
+ /usr/sbin/e4defrag
+ /usr/sbin/fdformat
+ /usr/sbin/filefrag
+ /usr/sbin/genl
+ /usr/sbin/groupadd
+ /usr/sbin/groupdel
+ /usr/sbin/groupmod
+ /usr/sbin/grpck
+ /usr/sbin/grpconv
+ /usr/sbin/grpunconv
+ /usr/sbin/iconvconfig
+ /usr/sbin/install-sgmlcatalog
+ /usr/sbin/invoke-rc.d
+ /usr/sbin/ip6tables-apply
+ /usr/sbin/iptables-apply
+ /usr/sbin/irqbalance
+ /usr/sbin/ldattach
+ /usr/sbin/locale-gen
+ /usr/sbin/logrotate
+ /usr/sbin/make-ssl-cert
+ /usr/sbin/mkinitramfs
+ /usr/sbin/mklost+found
+ /usr/sbin/newusers
+ /usr/sbin/nfnl_osf
+ /usr/sbin/nologin
+ /usr/sbin/ownership
+ /usr/sbin/pam-auth-update
+ /usr/sbin/pam_getenv
+ /usr/sbin/pam_timestamp_check
+ /usr/sbin/popcon-largest-unused
+ /usr/sbin/popularity-contest
+ /usr/sbin/postalias
+ /usr/sbin/postcat
+ /usr/sbin/postconf
+ /usr/sbin/postdrop
+ /usr/sbin/postfix
+ /usr/sbin/postfix-add-filter
+ /usr/sbin/postfix-add-policy
+ /usr/sbin/postkick
+ /usr/sbin/postlock
+ /usr/sbin/postlog
+ /usr/sbin/postmap
+ /usr/sbin/postmulti
+ /usr/sbin/postqueue
+ /usr/sbin/postsuper
+ /usr/sbin/posttls-finger
+ /usr/sbin/pwck
+ /usr/sbin/pwconv
+ /usr/sbin/pwunconv
+ /usr/sbin/qmqp-sink
+ /usr/sbin/qmqp-source
+ /usr/sbin/qshape
+ /usr/sbin/readprofile
+ /usr/sbin/remove-shell
+ /usr/sbin/rmail
+ /usr/sbin/rmt
+ /usr/sbin/rmt-tar
+ /usr/sbin/rsyslogd
+ /usr/sbin/rtcwake
+ /usr/sbin/sendmail
+ /usr/sbin/service
+ /usr/sbin/setvesablank
+ /usr/sbin/smtp-sink
+ /usr/sbin/smtp-source
+ /usr/sbin/sshd
+ /usr/sbin/tarcat
+ /usr/sbin/tcpdump
+ /usr/sbin/tunelp
+ /usr/sbin/tzconfig
+ /usr/sbin/ufw
+ /usr/sbin/update-alternatives
+ /usr/sbin/update-ca-certificates
+ /usr/sbin/update-catalog
+ /usr/sbin/update-info-dir
+ /usr/sbin/update-initramfs
+ /usr/sbin/update-locale
+ /usr/sbin/update-mime
+ /usr/sbin/update-passwd
+ /usr/sbin/update-pciids
+ /usr/sbin/update-rc.d
+ /usr/sbin/update-usbids
+ /usr/sbin/update-xmlcatalog
+ /usr/sbin/useradd
+ /usr/sbin/userdel
+ /usr/sbin/usermod
+ /usr/sbin/uuidd
+ /usr/sbin/validlocale
+ /usr/sbin/vcstime
+ /usr/sbin/vigr
+ /usr/sbin/vipw
+ /usr/sbin/visudo
+ /usr/sbin/vpddecode
+ /usr/sbin/zic
+/usr/bin:
+ /usr/bin/2to3-3.5
+ /usr/bin/X11
+ /usr/bin/[
+ /usr/bin/aa-enabled
+ /usr/bin/addpart
+ /usr/bin/appres
+ /usr/bin/apropos
+ /usr/bin/apt
+ /usr/bin/apt-cache
+ /usr/bin/apt-cdrom
+ /usr/bin/apt-config
+ /usr/bin/apt-extracttemplates
+ /usr/bin/apt-ftparchive
+ /usr/bin/apt-get
+ /usr/bin/apt-key
+ /usr/bin/apt-mark
+ /usr/bin/apt-sortpkgs
+ /usr/bin/arch
+ /usr/bin/atobm
+ /usr/bin/awk
+ /usr/bin/base32
+ /usr/bin/base64
+ /usr/bin/basename
+ /usr/bin/bashbug
+ /usr/bin/bitmap
+ /usr/bin/bmtoa
+ /usr/bin/bootctl
+ /usr/bin/bsd-from
+ /usr/bin/bsd-write
+ /usr/bin/busctl
+ /usr/bin/c_rehash
+ /usr/bin/cal
+ /usr/bin/calendar
+ /usr/bin/captoinfo
+ /usr/bin/catchsegv
+ /usr/bin/catman
+ /usr/bin/cautious-launcher
+ /usr/bin/chage
+ /usr/bin/chattr
+ /usr/bin/chcon
+ /usr/bin/check-language-support
+ /usr/bin/chfn
+ /usr/bin/chrt
+ /usr/bin/chsh
+ /usr/bin/ckbcomp
+ /usr/bin/cksum
+ /usr/bin/clear
+ /usr/bin/clear_console
+ /usr/bin/cmp
+ /usr/bin/codepage
+ /usr/bin/col
+ /usr/bin/colcrt
+ /usr/bin/colrm
+ /usr/bin/column
+ /usr/bin/comm
+ /usr/bin/compose
+ /usr/bin/cpp
+ /usr/bin/cpp-5
+ /usr/bin/crontab
+ /usr/bin/csplit
+ /usr/bin/ctstat
+ /usr/bin/cut
+ /usr/bin/dbus-cleanup-sockets
+ /usr/bin/dbus-daemon
+ /usr/bin/dbus-monitor
+ /usr/bin/dbus-run-session
+ /usr/bin/dbus-send
+ /usr/bin/dbus-update-activation-environment
+ /usr/bin/dbus-uuidgen
+ /usr/bin/deallocvt
+ /usr/bin/deb-systemd-helper
+ /usr/bin/deb-systemd-invoke
+ /usr/bin/debconf
+ /usr/bin/debconf-apt-progress
+ /usr/bin/debconf-communicate
+ /usr/bin/debconf-copydb
+ /usr/bin/debconf-escape
+ /usr/bin/debconf-set-selections
+ /usr/bin/debconf-show
+ /usr/bin/delpart
+ /usr/bin/dh_bash-completion
+ /usr/bin/dh_installxmlcatalogs
+ /usr/bin/dh_pypy
+ /usr/bin/dh_python3
+ /usr/bin/diff
+ /usr/bin/diff3
+ /usr/bin/dig
+ /usr/bin/dircolors
+ /usr/bin/dirname
+ /usr/bin/do-release-upgrade
+ /usr/bin/dpkg
+ /usr/bin/dpkg-deb
+ /usr/bin/dpkg-divert
+ /usr/bin/dpkg-maintscript-helper
+ /usr/bin/dpkg-query
+ /usr/bin/dpkg-split
+ /usr/bin/dpkg-statoverride
+ /usr/bin/dpkg-trigger
+ /usr/bin/du
+ /usr/bin/dumpkeys
+ /usr/bin/edit
+ /usr/bin/editor
+ /usr/bin/editres
+ /usr/bin/eject
+ /usr/bin/env
+ /usr/bin/envsubst
+ /usr/bin/eqn
+ /usr/bin/ex
+ /usr/bin/expand
+ /usr/bin/expiry
+ /usr/bin/expr
+ /usr/bin/factor
+ /usr/bin/faillog
+ /usr/bin/fallocate
+ /usr/bin/file
+ /usr/bin/find
+ /usr/bin/flock
+ /usr/bin/fmt
+ /usr/bin/fold
+ /usr/bin/free
+ /usr/bin/from
+ /usr/bin/ftp
+ /usr/bin/geqn
+ /usr/bin/getconf
+ /usr/bin/getent
+ /usr/bin/getkeycodes
+ /usr/bin/getopt
+ /usr/bin/gettext
+ /usr/bin/gettext.sh
+ /usr/bin/ginstall-info
+ /usr/bin/gpasswd
+ /usr/bin/gpg
+ /usr/bin/gpg-zip
+ /usr/bin/gpgsplit
+ /usr/bin/gpgv
+ /usr/bin/gpic
+ /usr/bin/groff
+ /usr/bin/grog
+ /usr/bin/grops
+ /usr/bin/grotty
+ /usr/bin/groups
+ /usr/bin/gtbl
+ /usr/bin/hd
+ /usr/bin/head
+ /usr/bin/helpztags
+ /usr/bin/hexdump
+ /usr/bin/host
+ /usr/bin/hostid
+ /usr/bin/hostnamectl
+ /usr/bin/i386
+ /usr/bin/iceauth
+ /usr/bin/ico
+ /usr/bin/iconv
+ /usr/bin/id
+ /usr/bin/info
+ /usr/bin/infobrowser
+ /usr/bin/infocmp
+ /usr/bin/infotocap
+ /usr/bin/install
+ /usr/bin/install-info
+ /usr/bin/ionice
+ /usr/bin/ipcmk
+ /usr/bin/ipcrm
+ /usr/bin/ipcs
+ /usr/bin/iptables-xml
+ /usr/bin/ischroot
+ /usr/bin/join
+ /usr/bin/kbdinfo
+ /usr/bin/killall
+ /usr/bin/last
+ /usr/bin/lastb
+ /usr/bin/lastlog
+ /usr/bin/lcf
+ /usr/bin/ldd
+ /usr/bin/less
+ /usr/bin/lessecho
+ /usr/bin/lessfile
+ /usr/bin/lesskey
+ /usr/bin/lesspipe
+ /usr/bin/lexgrog
+ /usr/bin/line
+ /usr/bin/link
+ /usr/bin/linux-version
+ /usr/bin/linux32
+ /usr/bin/linux64
+ /usr/bin/listres
+ /usr/bin/lnstat
+ /usr/bin/loadkeys
+ /usr/bin/loadunimap
+ /usr/bin/locale
+ /usr/bin/localectl
+ /usr/bin/localedef
+ /usr/bin/locate
+ /usr/bin/logger
+ /usr/bin/logname
+ /usr/bin/look
+ /usr/bin/lorder
+ /usr/bin/lsattr
+ /usr/bin/lsb_release
+ /usr/bin/lscpu
+ /usr/bin/lshw
+ /usr/bin/lsinitramfs
+ /usr/bin/lsipc
+ /usr/bin/lslocks
+ /usr/bin/lslogins
+ /usr/bin/lsof
+ /usr/bin/lspci
+ /usr/bin/lspgpot
+ /usr/bin/lsusb
+ /usr/bin/ltrace
+ /usr/bin/luit
+ /usr/bin/mailq
+ /usr/bin/man
+ /usr/bin/mandb
+ /usr/bin/manpath
+ /usr/bin/mapscrn
+ /usr/bin/mawk
+ /usr/bin/mcookie
+ /usr/bin/md5sum
+ /usr/bin/md5sum.textutils
+ /usr/bin/mesg
+ /usr/bin/mk_modmap
+ /usr/bin/mkfifo
+ /usr/bin/mlocate
+ /usr/bin/mtr
+ /usr/bin/namei
+ /usr/bin/nawk
+ /usr/bin/ncal
+ /usr/bin/neqn
+ /usr/bin/netkit-ftp
+ /usr/bin/newaliases
+ /usr/bin/newgrp
+ /usr/bin/ngettext
+ /usr/bin/nice
+ /usr/bin/nl
+ /usr/bin/nohup
+ /usr/bin/nproc
+ /usr/bin/nroff
+ /usr/bin/nsenter
+ /usr/bin/nslookup
+ /usr/bin/nstat
+ /usr/bin/nsupdate
+ /usr/bin/ntfsdecrypt
+ /usr/bin/numfmt
+ /usr/bin/oclock
+ /usr/bin/od
+ /usr/bin/on_ac_power
+ /usr/bin/openssl
+ /usr/bin/pager
+ /usr/bin/partx
+ /usr/bin/passwd
+ /usr/bin/paste
+ /usr/bin/pathchk
+ /usr/bin/pcimodules
+ /usr/bin/pdb3
+ /usr/bin/pdb3.5
+ /usr/bin/peekfd
+ /usr/bin/perl
+ /usr/bin/perl5.22.1
+ /usr/bin/pftp
+ /usr/bin/pg
+ /usr/bin/pgrep
+ /usr/bin/pic
+ /usr/bin/pico
+ /usr/bin/pinky
+ /usr/bin/pkill
+ /usr/bin/pldd
+ /usr/bin/pmap
+ /usr/bin/pr
+ /usr/bin/preconv
+ /usr/bin/print
+ /usr/bin/printenv
+ /usr/bin/printerbanner
+ /usr/bin/printf
+ /usr/bin/prlimit
+ /usr/bin/prtstat
+ /usr/bin/psfaddtable
+ /usr/bin/psfgettable
+ /usr/bin/psfstriptable
+ /usr/bin/psfxtable
+ /usr/bin/pstree
+ /usr/bin/pstree.x11
+ /usr/bin/ptx
+ /usr/bin/pwdx
+ /usr/bin/py3clean
+ /usr/bin/py3compile
+ /usr/bin/py3versions
+ /usr/bin/pybuild
+ /usr/bin/pydoc3
+ /usr/bin/pydoc3.5
+ /usr/bin/pygettext3
+ /usr/bin/pygettext3.5
+ /usr/bin/python3
+ /usr/bin/python3.5
+ /usr/bin/python3.5m
+ /usr/bin/python3m
+ /usr/bin/rcp
+ /usr/bin/realpath
+ /usr/bin/rename.ul
+ /usr/bin/rendercheck
+ /usr/bin/renice
+ /usr/bin/reset
+ /usr/bin/resizecons
+ /usr/bin/resizepart
+ /usr/bin/rev
+ /usr/bin/rgrep
+ /usr/bin/rlogin
+ /usr/bin/rmail
+ /usr/bin/routef
+ /usr/bin/routel
+ /usr/bin/rsh
+ /usr/bin/rstart
+ /usr/bin/rstartd
+ /usr/bin/rsync
+ /usr/bin/rtstat
+ /usr/bin/run-mailcap
+ /usr/bin/runcon
+ /usr/bin/rview
+ /usr/bin/rvim
+ /usr/bin/savelog
+ /usr/bin/scp
+ /usr/bin/screendump
+ /usr/bin/script
+ /usr/bin/scriptreplay
+ /usr/bin/sdiff
+ /usr/bin/see
+ /usr/bin/select-editor
+ /usr/bin/sensible-browser
+ /usr/bin/sensible-editor
+ /usr/bin/sensible-pager
+ /usr/bin/seq
+ /usr/bin/sessreg
+ /usr/bin/setarch
+ /usr/bin/setkeycodes
+ /usr/bin/setleds
+ /usr/bin/setlogcons
+ /usr/bin/setmetamode
+ /usr/bin/setpci
+ /usr/bin/setsid
+ /usr/bin/setterm
+ /usr/bin/setxkbmap
+ /usr/bin/sftp
+ /usr/bin/sg
+ /usr/bin/sha1sum
+ /usr/bin/sha224sum
+ /usr/bin/sha256sum
+ /usr/bin/sha384sum
+ /usr/bin/sha512sum
+ /usr/bin/showconsolefont
+ /usr/bin/showkey
+ /usr/bin/showrgb
+ /usr/bin/shred
+ /usr/bin/shuf
+ /usr/bin/skill
+ /usr/bin/slabtop
+ /usr/bin/slogin
+ /usr/bin/smproxy
+ /usr/bin/snice
+ /usr/bin/soelim
+ /usr/bin/sort
+ /usr/bin/split
+ /usr/bin/splitfont
+ /usr/bin/ssh
+ /usr/bin/ssh-add
+ /usr/bin/ssh-agent
+ /usr/bin/ssh-argv0
+ /usr/bin/ssh-copy-id
+ /usr/bin/ssh-keygen
+ /usr/bin/ssh-keyscan
+ /usr/bin/startx
+ /usr/bin/stat
+ /usr/bin/stdbuf
+ /usr/bin/strace
+ /usr/bin/sudo
+ /usr/bin/sudoedit
+ /usr/bin/sudoreplay
+ /usr/bin/sum
+ /usr/bin/systemd-analyze
+ /usr/bin/systemd-cat
+ /usr/bin/systemd-cgls
+ /usr/bin/systemd-cgtop
+ /usr/bin/systemd-delta
+ /usr/bin/systemd-detect-virt
+ /usr/bin/systemd-path
+ /usr/bin/systemd-resolve
+ /usr/bin/systemd-run
+ /usr/bin/systemd-stdio-bridge
+ /usr/bin/tabs
+ /usr/bin/tac
+ /usr/bin/tail
+ /usr/bin/taskset
+ /usr/bin/tbl
+ /usr/bin/tee
+ /usr/bin/telnet
+ /usr/bin/telnet.netkit
+ /usr/bin/test
+ /usr/bin/tic
+ /usr/bin/time
+ /usr/bin/timedatectl
+ /usr/bin/timeout
+ /usr/bin/tload
+ /usr/bin/toe
+ /usr/bin/top
+ /usr/bin/touch
+ /usr/bin/tput
+ /usr/bin/tr
+ /usr/bin/tracepath
+ /usr/bin/tracepath6
+ /usr/bin/traceroute6
+ /usr/bin/traceroute6.iputils
+ /usr/bin/transset
+ /usr/bin/troff
+ /usr/bin/truncate
+ /usr/bin/tset
+ /usr/bin/tsort
+ /usr/bin/tty
+ /usr/bin/tzselect
+ /usr/bin/ubuntu-support-status
+ /usr/bin/ucf
+ /usr/bin/ucfq
+ /usr/bin/ucfr
+ /usr/bin/ul
+ /usr/bin/unexpand
+ /usr/bin/unicode_stop
+ /usr/bin/uniq
+ /usr/bin/unlink
+ /usr/bin/unshare
+ /usr/bin/update-alternatives
+ /usr/bin/update-mime-database
+ /usr/bin/update-mime-database.real
+ /usr/bin/updatedb
+ /usr/bin/updatedb.mlocate
+ /usr/bin/uptime
+ /usr/bin/usb-devices
+ /usr/bin/usbhid-dump
+ /usr/bin/users
+ /usr/bin/utmpdump
+ /usr/bin/uuidgen
+ /usr/bin/vi
+ /usr/bin/view
+ /usr/bin/viewres
+ /usr/bin/vim
+ /usr/bin/vim.basic
+ /usr/bin/vim.tiny
+ /usr/bin/vimdiff
+ /usr/bin/vimtutor
+ /usr/bin/vmstat
+ /usr/bin/volname
+ /usr/bin/w
+ /usr/bin/w.procps
+ /usr/bin/wall
+ /usr/bin/watch
+ /usr/bin/wc
+ /usr/bin/wget
+ /usr/bin/whatis
+ /usr/bin/whereis
+ /usr/bin/which
+ /usr/bin/who
+ /usr/bin/whoami
+ /usr/bin/write
+ /usr/bin/x11perf
+ /usr/bin/x11perfcomp
+ /usr/bin/x86_64
+ /usr/bin/x86_64-linux-gnu-cpp
+ /usr/bin/x86_64-linux-gnu-cpp-5
+ /usr/bin/xargs
+ /usr/bin/xauth
+ /usr/bin/xbiff
+ /usr/bin/xcalc
+ /usr/bin/xclipboard
+ /usr/bin/xclock
+ /usr/bin/xcmsdb
+ /usr/bin/xconsole
+ /usr/bin/xcursorgen
+ /usr/bin/xcutsel
+ /usr/bin/xdg-user-dir
+ /usr/bin/xdg-user-dirs-update
+ /usr/bin/xditview
+ /usr/bin/xdpyinfo
+ /usr/bin/xdriinfo
+ /usr/bin/xedit
+ /usr/bin/xev
+ /usr/bin/xeyes
+ /usr/bin/xfd
+ /usr/bin/xfontsel
+ /usr/bin/xgamma
+ /usr/bin/xgc
+ /usr/bin/xhost
+ /usr/bin/xinit
+ /usr/bin/xkbbell
+ /usr/bin/xkbcomp
+ /usr/bin/xkbevd
+ /usr/bin/xkbprint
+ /usr/bin/xkbvleds
+ /usr/bin/xkbwatch
+ /usr/bin/xkeystone
+ /usr/bin/xkill
+ /usr/bin/xload
+ /usr/bin/xlogo
+ /usr/bin/xlsatoms
+ /usr/bin/xlsclients
+ /usr/bin/xlsfonts
+ /usr/bin/xmag
+ /usr/bin/xman
+ /usr/bin/xmessage
+ /usr/bin/xmodmap
+ /usr/bin/xmore
+ /usr/bin/xprop
+ /usr/bin/xrandr
+ /usr/bin/xrdb
+ /usr/bin/xrefresh
+ /usr/bin/xset
+ /usr/bin/xsetmode
+ /usr/bin/xsetpointer
+ /usr/bin/xsetroot
+ /usr/bin/xsm
+ /usr/bin/xstdcmap
+ /usr/bin/xvidtune
+ /usr/bin/xvinfo
+ /usr/bin/xwd
+ /usr/bin/xwininfo
+ /usr/bin/xwud
+ /usr/bin/xxd
+ /usr/bin/yes
+ /usr/bin/zdump
+/sbin:
+ /sbin/MAKEDEV
+ /sbin/acpi_available
+ /sbin/agetty
+ /sbin/apm_available
+ /sbin/apparmor_parser
+ /sbin/badblocks
+ /sbin/blkdiscard
+ /sbin/blkid
+ /sbin/blockdev
+ /sbin/bridge
+ /sbin/capsh
+ /sbin/cfdisk
+ /sbin/chcpu
+ /sbin/ctrlaltdel
+ /sbin/debugfs
+ /sbin/depmod
+ /sbin/dhclient
+ /sbin/dhclient-script
+ /sbin/dosfsck
+ /sbin/dosfslabel
+ /sbin/dumpe2fs
+ /sbin/e2fsck
+ /sbin/e2image
+ /sbin/e2label
+ /sbin/e2undo
+ /sbin/fatlabel
+ /sbin/fdisk
+ /sbin/findfs
+ /sbin/fsck
+ /sbin/fsck.cramfs
+ /sbin/fsck.ext2
+ /sbin/fsck.ext3
+ /sbin/fsck.ext4
+ /sbin/fsck.ext4dev
+ /sbin/fsck.fat
+ /sbin/fsck.minix
+ /sbin/fsck.msdos
+ /sbin/fsck.nfs
+ /sbin/fsck.vfat
+ /sbin/fsfreeze
+ /sbin/fstab-decode
+ /sbin/fstrim
+ /sbin/getcap
+ /sbin/getpcaps
+ /sbin/getty
+ /sbin/halt
+ /sbin/hdparm
+ /sbin/hwclock
+ /sbin/ifconfig
+ /sbin/ifdown
+ /sbin/ifquery
+ /sbin/ifup
+ /sbin/init
+ /sbin/insmod
+ /sbin/installkernel
+ /sbin/ip
+ /sbin/ip6tables
+ /sbin/ip6tables-restore
+ /sbin/ip6tables-save
+ /sbin/ipmaddr
+ /sbin/iptables
+ /sbin/iptables-restore
+ /sbin/iptables-save
+ /sbin/iptunnel
+ /sbin/isosize
+ /sbin/kbdrate
+ /sbin/killall5
+ /sbin/ldconfig
+ /sbin/ldconfig.real
+ /sbin/logsave
+ /sbin/losetup
+ /sbin/lsmod
+ /sbin/mii-tool
+ /sbin/mkdosfs
+ /sbin/mke2fs
+ /sbin/mkfs
+ /sbin/mkfs.bfs
+ /sbin/mkfs.cramfs
+ /sbin/mkfs.ext2
+ /sbin/mkfs.ext3
+ /sbin/mkfs.ext4
+ /sbin/mkfs.ext4dev
+ /sbin/mkfs.fat
+ /sbin/mkfs.minix
+ /sbin/mkfs.msdos
+ /sbin/mkfs.ntfs
+ /sbin/mkfs.vfat
+ /sbin/mkhomedir_helper
+ /sbin/mkntfs
+ /sbin/mkswap
+ /sbin/modinfo
+ /sbin/modprobe
+ /sbin/mount.fuse
+ /sbin/mount.lowntfs-3g
+ /sbin/mount.ntfs
+ /sbin/mount.ntfs-3g
+ /sbin/nameif
+ /sbin/ntfsclone
+ /sbin/ntfscp
+ /sbin/ntfslabel
+ /sbin/ntfsresize
+ /sbin/ntfsundelete
+ /sbin/on_ac_power
+ /sbin/pam_extrausers_chkpwd
+ /sbin/pam_extrausers_update
+ /sbin/pam_tally
+ /sbin/pam_tally2
+ /sbin/parted
+ /sbin/partprobe
+ /sbin/pivot_root
+ /sbin/plipconfig
+ /sbin/plymouthd
+ /sbin/poweroff
+ /sbin/rarp
+ /sbin/raw
+ /sbin/reboot
+ /sbin/resize2fs
+ /sbin/resolvconf
+ /sbin/rmmod
+ /sbin/route
+ /sbin/rtacct
+ /sbin/rtmon
+ /sbin/runlevel
+ /sbin/runuser
+ /sbin/setcap
+ /sbin/setvtrgb
+ /sbin/sfdisk
+ /sbin/shadowconfig
+ /sbin/shutdown
+ /sbin/slattach
+ /sbin/start-stop-daemon
+ /sbin/sulogin
+ /sbin/swaplabel
+ /sbin/swapoff
+ /sbin/swapon
+ /sbin/switch_root
+ /sbin/sysctl
+ /sbin/tc
+ /sbin/telinit
+ /sbin/tipc
+ /sbin/tune2fs
+ /sbin/udevadm
+ /sbin/unix_chkpwd
+ /sbin/unix_update
+ /sbin/ureadahead
+ /sbin/wipefs
+ /sbin/xtables-multi
+ /sbin/zramctl
+/bin:
+ /bin/bash
+ /bin/bunzip2
+ /bin/busybox
+ /bin/bzcat
+ /bin/bzcmp
+ /bin/bzdiff
+ /bin/bzegrep
+ /bin/bzexe
+ /bin/bzfgrep
+ /bin/bzgrep
+ /bin/bzip2
+ /bin/bzip2recover
+ /bin/bzless
+ /bin/bzmore
+ /bin/cat
+ /bin/chgrp
+ /bin/chmod
+ /bin/chown
+ /bin/chvt
+ /bin/cp
+ /bin/cpio
+ /bin/dash
+ /bin/date
+ /bin/dd
+ /bin/df
+ /bin/dir
+ /bin/dmesg
+ /bin/dnsdomainname
+ /bin/domainname
+ /bin/dumpkeys
+ /bin/echo
+ /bin/ed
+ /bin/egrep
+ /bin/false
+ /bin/fgconsole
+ /bin/fgrep
+ /bin/findmnt
+ /bin/fuser
+ /bin/fusermount
+ /bin/grep
+ /bin/gunzip
+ /bin/gzexe
+ /bin/gzip
+ /bin/hostname
+ /bin/ip
+ /bin/journalctl
+ /bin/kbd_mode
+ /bin/kill
+ /bin/kmod
+ /bin/less
+ /bin/lessecho
+ /bin/lessfile
+ /bin/lesskey
+ /bin/lesspipe
+ /bin/ln
+ /bin/loadkeys
+ /bin/login
+ /bin/loginctl
+ /bin/lowntfs-3g
+ /bin/ls
+ /bin/lsblk
+ /bin/lsmod
+ /bin/mkdir
+ /bin/mknod
+ /bin/mktemp
+ /bin/more
+ /bin/mount
+ /bin/mountpoint
+ /bin/mt
+ /bin/mt-gnu
+ /bin/mv
+ /bin/nano
+ /bin/nc
+ /bin/nc.openbsd
+ /bin/netcat
+ /bin/netstat
+ /bin/networkctl
+ /bin/nisdomainname
+ /bin/ntfs-3g
+ /bin/ntfs-3g.probe
+ /bin/ntfs-3g.secaudit
+ /bin/ntfs-3g.usermap
+ /bin/ntfscat
+ /bin/ntfscluster
+ /bin/ntfscmp
+ /bin/ntfsfallocate
+ /bin/ntfsfix
+ /bin/ntfsinfo
+ /bin/ntfsls
+ /bin/ntfsmove
+ /bin/ntfstruncate
+ /bin/ntfswipe
+ /bin/open
+ /bin/openvt
+ /bin/pidof
+ /bin/ping
+ /bin/ping6
+ /bin/plymouth
+ /bin/ps
+ /bin/pwd
+ /bin/rbash
+ /bin/readlink
+ /bin/red
+ /bin/rm
+ /bin/rmdir
+ /bin/rnano
+ /bin/run-parts
+ /bin/sed
+ /bin/setfont
+ /bin/setupcon
+ /bin/sh
+ /bin/sh.distrib
+ /bin/sleep
+ /bin/ss
+ /bin/static-sh
+ /bin/stty
+ /bin/su
+ /bin/sync
+ /bin/systemctl
+ /bin/systemd
+ /bin/systemd-ask-password
+ /bin/systemd-escape
+ /bin/systemd-hwdb
+ /bin/systemd-inhibit
+ /bin/systemd-machine-id-setup
+ /bin/systemd-notify
+ /bin/systemd-tmpfiles
+ /bin/systemd-tty-ask-password-agent
+ /bin/tailf
+ /bin/tar
+ /bin/tempfile
+ /bin/touch
+ /bin/true
+ /bin/udevadm
+ /bin/ulockmgr_server
+ /bin/umount
+ /bin/uname
+ /bin/uncompress
+ /bin/unicode_start
+ /bin/vdir
+ /bin/wdctl
+ /bin/which
+ /bin/whiptail
+ /bin/ypdomainname
+ /bin/zcat
+ /bin/zcmp
+ /bin/zdiff
+ /bin/zegrep
+ /bin/zfgrep
+ /bin/zforce
+ /bin/zgrep
+ /bin/zless
+ /bin/zmore
+ /bin/znew
+/usr/games:
+/usr/local/games:
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+echo $0
+echo $1
+echo $2
+echo $3
+
+user1@lab:~$ ./myscript 5 10 15
+./myscript
+5
+10
+15
+
+user1@lab:~$ ./myscript 7 15 -1
+./myscript
+7
+15
+-1
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+total=$[ $1 + $2 ]
+echo The first parameter is $1.
+echo The second parameter is $2.
+echo The sum is $total.
+
+user1@lab:~$ ./myscript 5 10 15
+The first parameter is 5.
+The second parameter is 10.
+The sum is 15.
+
+user1@lab:~$ ./myscript 20 40 34
+The first parameter is 20.
+The second parameter is 40.
+The sum is 60.
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+echo Hello $1, how do you do
+
+user1@lab:~$ ./myscript Adam
+Hello Adam, how do you do
+
+user1@lab:~$ ./myscript John
+Hello John, how do you do
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+if [ -n "$1" ]
+then
+echo Hello $1.
+else
+echo "No parameters found."
+fi
+
+user1@lab:~$ ./myscript John
+Hello John.
+
+user1@lab:~$ ./myscript
+No parameters found.
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+echo There were $# parameters passed.
+
+user1@lab:~$ ./myscript 1 2 3 4 5
+There were 5 parameters passed.
+
+user1@lab:~$ ./myscript 7 5 3 2 1 10 8 -1
+There were 8 parameters passed.
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+echo The last parameter was ${!#}
+
+user1@lab:~$ ./myscript 1 2 3 4 5
+The last parameter was 5
+
+user1@lab:~$ ./myscript 7 5 3 2 1 10 8 -1
+The last parameter was -1
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+echo "Using the \$* method: $*"
+echo "-----------"
+echo "Using the \$@ method: $@"
+
+user1@lab:~$ ./myscript 1 2 3 4 5
+Using the $* method: 1 2 3 4 5
+-----------
+Using the $@ method: 1 2 3 4 5
+
+user1@lab:~$ ./myscript 7 5 3 2 1 10 8 -1
+Using the $* method: 7 5 3 2 1 10 8 -1
+-----------
+Using the $@ method: 7 5 3 2 1 10 8 -1
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+count=1
+
+for param in "$*"
+do
+echo "\$* Parameter #$count = $param"
+count=$(( $count + 1 ))
+done
+
+count=1
+
+for param in "$@"
+do
+echo "\$@ Parameter #$count = $param"
+count=$(( $count + 1 ))
+done
+
+user1@lab:~$ ./myscript 1 2 3 4 5
+$* Parameter #1 = 1 2 3 4 5
+$@ Parameter #1 = 1
+$@ Parameter #2 = 2
+$@ Parameter #3 = 3
+$@ Parameter #4 = 4
+$@ Parameter #5 = 5
+
+user1@lab:~$ ./myscript 7 5 3 2 1 10 8 -1
+$* Parameter #1 = 7 5 3 2 1 10 8 -1
+$@ Parameter #1 = 7
+$@ Parameter #2 = 5
+$@ Parameter #3 = 3
+$@ Parameter #4 = 2
+$@ Parameter #5 = 1
+$@ Parameter #6 = 10
+$@ Parameter #7 = 8
+$@ Parameter #8 = -1
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+count=1
+
+while [ -n "$1" ]
+do
+echo "Parameter #$count = $1"
+count=$(( $count + 1 ))
+shift
+done
+
+user1@lab:~$ ./myscript 1 2 3 4 5
+Parameter #1 = 1
+Parameter #2 = 2
+Parameter #3 = 3
+Parameter #4 = 4
+Parameter #5 = 5
+
+user1@lab:~$ ./myscript 7 5 3 2 1 10 8 -1
+Parameter #1 = 7
+Parameter #2 = 5
+Parameter #3 = 3
+Parameter #4 = 2
+Parameter #5 = 1
+Parameter #6 = 10
+Parameter #7 = 8
+Parameter #8 = -1
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+echo
+while [ -n "$1" ]
+do
+case "$1" in
+-a) echo "Found the -a option" ;;
+-b) echo "Found the -b option" ;;
+-c) echo "Found the -c option" ;;
+*) echo "$1 is not an option" ;;
+esac
+shift
+done
+
+user1@lab:~$ ./myscript -a -b -c -d -1 2 @
+
+Found the -a option
+Found the -b option
+Found the -c option
+-d is not an option
+-1 is not an option
+2 is not an option
+@ is not an option
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+while [ -n "$1" ]
+do
+case "$1" in
+-a) echo "Found the -a option" ;;
+-b) echo "Found the -b option";;
+-c) echo "Found the -c option" ;;
+--) shift
+break ;;
+*) echo "$1 is not an option";;
+esac
+shift
+done
+
+count=1
+
+for param in $@
+do
+echo "Parameter #$count: $param"
+count=$(( $count + 1 ))
+done
+
+user1@lab:~$ ./myscript -a -b -c 1 ! -3 -- 7 25 -12 -33
+Found the -a option
+Found the -b option
+Found the -c option
+1 is not an option
+! is not an option
+-3 is not an option
+Parameter #1: 7
+Parameter #2: 25
+Parameter #3: -12
+Parameter #4: -33
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+while [ -n "$1" ]
+do
+case "$1" in
+-a) echo "Found the -a option";;
+-b) param="$2"
+echo "Found the -b option, with parameter value $param"
+shift ;;
+-c) echo "Found the -c option";;
+--) shift
+break ;;
+*) echo "$1 is not an option";;
+esac
+shift
+done
+
+count=1
+
+for param in "$@"
+do
+echo "Parameter #$count: $param"
+count=$(( $count + 1 ))
+done
+
+user1@lab:~$ ./myscript -a -b 20 -c 'test' -- 12 14 44
+Found the -a option
+Found the -b option, with parameter value 20
+Found the -c option
+test is not an option
+Parameter #1: 12
+Parameter #2: 14
+Parameter #3: 44
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+echo -n "Enter your name: "
+read name
+echo "Hello $name, welcome to my program."
+
+user1@lab:~$ ./myscript
+Enter your name: Adam
+Hello Adam, welcome to my program.
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+read -p "Enter your name: " first last
+echo "Your data for $last, $first..."
+
+user1@lab:~$ ./myscript
+Enter your name: first last
+Your data for last, first...
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+read -p "Enter your name: "
+echo Hello $REPLY, welcome to my program.
+
+user1@lab:~$ ./myscript
+Enter your name: Adam
+Hello Adam, welcome to my program.
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+if read -t 5 -p "Enter your name: " name
+then
+echo "Hello $name, welcome to my script"
+else
+echo "Sorry, too slow!"
+fi
+
+user1@lab:~$ ./myscript
+Enter your name: Sorry, too slow!
+
+user1@lab:~$ ./myscript
+Enter your name: Adam
+Hello Adam, welcome to my script
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+read -s -p "Enter your password: " pass
+echo "Is your password really $pass?"
+
+user1@lab:~$ ./myscript
+Enter your password: Is your password really 1111?
+
+user1@lab:~$ ./myscript
+Enter your password: Is your password really test@123?
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+count=1
+
+cat myfile | while read line
+do
+echo "Line $count: $line"
+count=$(( $count + 1 ))
+done
+echo "Finished"
+
+user1@lab:~$ ./myscript
+Line 1: User1
+Line 2: user1
+Line 3: Web
+Line 4: IT
+Line 5: programing
+Line 6: 2017
+Line 7: ..
+Finished
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ pwd >> myfile1
+user1@lab:~$ cat ./myfile1
+/home/user1
+
+user1@lab:~$ ls -l xfile > myfile1
+ls: cannot access 'xfile': No such file or directory
+
+user1@lab:~$ ls -l xfile 2> myfile1
+user1@lab:~$ cat ./myfile1
+ls: cannot access 'xfile': No such file or directory
+
+user1@lab:~$ ls -l myfile1 xfile anotherfile 2> errorcontent 1> correctcontent
+user1@lab:~$ cat ./correctcontent
+-rw-rw-r-- 1 user1 user1 53 Nov  5 22:19 myfile1
+user1@lab:~$ cat ./errorcontent
+ls: cannot access 'xfile': No such file or directory
+ls: cannot access 'anotherfile': No such file or directory
+
+user1@lab:~$ ls -l myfile1 xfile anotherfile &> content
+user1@lab:~$ cat ./content
+ls: cannot access 'xfile': No such file or directory
+ls: cannot access 'anotherfile': No such file or directory
+-rw-rw-r-- 1 user1 user1 53 Nov  5 22:19 myfile1
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+echo "This is an error" >&2
+echo "This is normal output"
+
+user1@lab:~$ ./myscript
+This is an error
+This is normal output
+
+user1@lab:~$ ./myscript 2> content
+This is normal output
+user1@lab:~$ cat ./content
+This is an error
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+exec 1> outfile
+echo "This is a test of redirecting all output"
+echo "from a shell script to another file."
+echo "without having to redirect every line"
+
+user1@lab:~$ ./myscript
+user1@lab:~$ cat ./outfile
+This is a test of redirecting all output
+from a shell script to another file.
+without having to redirect every line
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+exec 2> myerror
+echo "This is the start of the script"
+echo "now redirecting all output to another location"
+exec 1> myfile
+echo "This should go to the myfile file"
+echo "and this should go to the myerror file" >&2
+
+user1@lab:~$ ./myscript
+This is the start of the script
+now redirecting all output to another location
+
+user1@lab:~$ cat ./myerror
+and this should go to the myerror file
+
+user1@lab:~$ cat ./myfile
+This should go to the myfile file
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+exec 0< myfile
+
+count=1
+
+while read line
+do
+echo "Line #$count: $line"
+count=$(( $count + 1 ))
+done
+
+user1@lab:~$ ./myscript
+./myscript: line 3: testfile: No such file or directory
+user1@lab:~$ touch testfile
+user1@lab:~$ echo -e 'this is the first line\nthis is the second line\nthis is t he third line' > testfile
+user1@lab:~$ ./myscript
+Line #1: this is the first line
+Line #2: this is the second line
+Line #3: this is the third line
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+exec 3> myfile
+echo "This should display on the screen"
+echo "and this should be stored in the file" >&3
+echo "And this should be back on the screen"
+
+user1@lab:~$ ./myscript
+This should display on the screen
+And this should be back on the screen
+user1@lab:~$ cat ./myfile
+and this should be stored in the file
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+exec 6<&0
+exec 0< myfile
+
+count=1
+
+while read line
+do
+echo "Line #$count: $line"
+count=$(( $count + 1 ))
+done
+
+exec 0<&6
+read -p "Are you done now? " answer
+case $answer in
+y) echo "Goodbye";;
+n) echo "Sorry, this is the end.";;
+esac
+
+user1@lab:~$ ./myscript
+Line #1: First line
+Line #2: Second line
+Line #3: Third line
+Are you done now? y
+Goodbye
+
+user1@lab:~$ ./myscript
+Line #1: First line
+Line #2: Second line
+Line #3: Third line
+Are you done now? n
+Sorry, this is the end.
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+exec 3> myfile
+echo "This is a test line of data" >&3
+exec 3>&-
+echo "This won't work" >&3
+
+user1@lab:~$ ./myscript
+./myscript: line 6: 3: Bad file descriptor
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ lsof -a -p $$ -d 0,1,2
+COMMAND   PID  USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+bash    21637 user1    0u   CHR  136,2      0t0    5 /dev/pts/2
+bash    21637 user1    1u   CHR  136,2      0t0    5 /dev/pts/2
+bash    21637 user1    2u   CHR  136,2      0t0    5 /dev/pts/2
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3                File: ./myscript                             Modified
+
+#!/bin/bash
+
+exec 3> myfile1
+exec 6> myfile2
+exec 7< myfile3
+lsof -a -p $$ -d 0,1,2,3,6,7
+
+user1@lab:~$ ./myscript
+COMMAND    PID  USER   FD   TYPE DEVICE SIZE/OFF   NODE NAME
+myscript 21895 user1    0u   CHR  136,2      0t0      5 /dev/pts/2
+myscript 21895 user1    1u   CHR  136,2      0t0      5 /dev/pts/2
+myscript 21895 user1    2u   CHR  136,2      0t0      5 /dev/pts/2
+myscript 21895 user1    3w   REG    7,0        0 524496 /home/user1/myfile1
+myscript 21895 user1    6w   REG    7,0        0 524507 /home/user1/myfile2
+myscript 21895 user1    7r   REG    7,0        0 524508 /home/user1/myfile3
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ ls -al badfile anotherfile 2> /dev/null
+user1@lab:~$ cat /dev/null > myfile
