@@ -234,6 +234,35 @@ user1@lab:~$ jobs -l
 
 -----------------------------------------------------------------------------------------
 
+user1@lab:~$ ./myscript
+Loop #1
+^Z
+[1]+  Stopped                 ./myscript
+
+user1@lab:~$ bg
+[1]+ ./myscript &
+
+user1@lab:~$ Loop #2
+jobs
+[1]+  Running                 ./myscript &
+user1@lab:~$ Loop #3
+fg 1
+./myscript
+Loop #4
+^C
+
+user1@lab:~$ ./myscript
+Loop #1
+^Z
+[1]+  Stopped                 ./myscript
+
+user1@lab:~$ fg 1
+./myscript
+
+^C
+
+-----------------------------------------------------------------------------------------
+
 user1@lab:~$ nano ./myscript
 
   GNU nano 2.5.3              File: ./myscript                        Modified
