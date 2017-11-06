@@ -24,3 +24,234 @@ F S   UID   PID  PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
 0 S  1000  3079  3078  0  80   0 -  5284 wait   pts/2    00:00:00 bash
 0 R  1000  3154  3079  0  80   0 -  7005 -      pts/2    00:00:00 ps
 
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3              File: ./myscript                        Modified
+
+#!/bin/bash
+
+trap "echo ' Trapped Ctrl-C'" SIGINT
+echo This is a test script
+
+count=1
+while [ $count -le 10 ]
+do
+echo "Loop #$count"
+sleep 1
+count=$(( $count + 1 ))
+done
+
+user1@lab:~$ ./myscript
+This is a test script
+Loop #1
+Loop #2
+Loop #3
+^C Trapped Ctrl-C
+Loop #4
+Loop #5
+^C Trapped Ctrl-C
+Loop #6
+Loop #7
+Loop #8
+^C Trapped Ctrl-C
+Loop #9
+Loop #10
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3              File: ./myscript                        Modified
+
+#!/bin/bash
+
+trap "echo Goodbye..." EXIT
+
+count=1
+
+while [ $count -le 5 ]
+do
+echo "Loop #$count"
+sleep 1
+count=$(( $count + 1 ))
+done
+
+user1@lab:~$ ./myscript
+Loop #1
+Loop #2
+^CGoodbye...
+
+user1@lab:~$ ./myscript
+Loop #1
+Loop #2
+Loop #3
+^CGoodbye...
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3              File: ./myscript                        Modified
+
+#!/bin/bash
+
+trap "echo 'Ctrl-C is trapped.'" SIGINT
+
+count=1
+
+while [ $count -le 5 ]
+do
+echo "Loop #$count"
+sleep 1
+count=$(( $count + 1 ))
+done
+
+trap "echo ' I modified the trap!'" SIGINT
+
+count=1
+
+while [ $count -le 5 ]
+do
+echo "Second Loop #$count"
+sleep 1
+count=$(( $count + 1 ))
+done
+
+user1@lab:~$ ./myscript
+Loop #1
+Loop #2
+Loop #3
+^CCtrl-C is trapped.
+Loop #4
+Loop #5
+^CCtrl-C is trapped.
+Second Loop #1
+Second Loop #2
+Second Loop #3
+^C I modified the trap!
+Second Loop #4
+Second Loop #5
+^C I modified the trap!
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3              File: ./myscript                        Modified
+
+#!/bin/bash
+
+trap "echo 'Ctrl-C is trapped.'" SIGINT
+count=1
+while [ $count -le 5 ]
+do
+echo "Loop #$count"
+sleep 1
+count=$(( $count + 1 ))
+done
+trap -- SIGINT
+echo "I just removed the trap"
+count=1
+while [ $count -le 5 ]
+do
+echo "Second Loop #$count"
+sleep 1
+count=$(( $count + 1 ))
+done
+
+user1@lab:~$ ./myscript
+Loop #1
+Loop #2
+^CCtrl-C is trapped.
+Loop #3
+Loop #4
+^CCtrl-C is trapped.
+Loop #5
+I modified the trap!
+Second Loop #1
+^C
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3              File: ./myscript                        Modified
+
+#!/bin/bash
+
+count=1
+while [ $count -le 10 ]
+do
+sleep 1
+count=$(( $count + 1 ))
+done
+
+user1@lab:~$ ./myscript &
+[1] 4280
+
+user1@lab:~$ ps -l
+F S   UID   PID  PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S  1000  3623  3622  0  80   0 -  5282 wait   pts/2    00:00:00 bash
+0 S  1000  4280  3623  0  80   0 -  2904 wait   pts/2    00:00:00 myscript
+0 S  1000  4283  4280  0  80   0 -  1606 hrtime pts/2    00:00:00 sleep
+0 R  1000  4284  3623  0  80   0 -  7005 -      pts/2    00:00:00 ps
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nohup ./myscript &
+[1] 4342
+user1@lab:~$ nohup: ignoring input and appending output to 'nohup.out'
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3              File: ./myscript                        Modified
+
+#!/bin/bash
+
+count=1
+while [ $count -le 10 ]
+do
+echo "Loop #$count"
+sleep 10
+count=$(( $count + 1 ))
+done
+
+user1@lab:~$ ./myscript
+Loop #1
+^Z
+[1]+  Stopped                 ./myscript
+
+user1@lab:~$ ./myscript > outfile &
+[2] 4399
+
+user1@lab:~$ jobs -l
+[1]+  4395 Stopped                 ./myscript
+[2]-  4399 Running                 ./myscript > outfile &
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3              File: ./myscript                        Modified
+
+#!/bin/bash
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3              File: ./myscript                        Modified
+
+#!/bin/bash
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+
+  GNU nano 2.5.3              File: ./myscript                        Modified
+
+#!/bin/bash
