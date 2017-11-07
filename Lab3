@@ -1449,12 +1449,305 @@ user1@lab:~$ nano ./testfile
 927-8.365217.27
 36257.8157492.5
 
-
+user1@lab:~$ awk 'BEGIN{FIELDWIDTHS="3 5 2 5"}{print $1,$2,$3,$4}' ./testfile
+123 5.965 21 47.91
+927 -8.36 52 17.27
+362 57.81 57 492.5
 
 -----------------------------------------------------------------------------------------
 
-user1@lab:~$ nano ./myscript
+user1@lab:~$ nano ./addresses
+  
+  GNU nano 2.5.3               File: ./addresses                            Modified
 
-  GNU nano 2.5.3              File: ./myscript                        Modified
+Person Name
+123 High Street
+(222) 466-1234
 
-#!/bin/bash
+Another person
+487 High Street
+(523) 643-8754
+
+user1@lab:~$ ls -l
+total 60
+-rw-rw-r-- 1 user1 user1  90 Nov  7 19:58 addresses
+-rw-rw-r-- 1 user1 user1  17 Nov  5 22:27 content
+-rw-rw-r-- 1 user1 user1  49 Nov  5 22:19 correctcontent
+-rw-rw-r-- 1 user1 user1 112 Nov  5 22:19 errorcontent
+-rw-rw-r-- 1 user1 user1  34 Nov  7 16:53 mycommands
+-rw-rw-r-- 1 user1 user1  39 Nov  5 22:32 myerror
+-rw-rw-r-- 1 user1 user1  90 Nov  7 18:49 myfile
+-rw-rw-r-- 1 user1 user1 108 Nov  5 20:22 myfile.txt
+-rw-rw-r-- 1 user1 user1   0 Nov  5 22:53 myfile1
+-rw-rw-r-- 1 user1 user1   0 Nov  5 22:53 myfile2
+-rw-rw-r-- 1 user1 user1   0 Nov  5 22:52 myfile3
+-rwxrwxr-x 1 user1 user1  54 Nov  6 22:40 myfuncs
+-rwxrwxr-x 1 user1 user1  48 Nov  7 19:48 myscript
+-rw-rw-r-- 1 user1 user1  47 Nov  7 18:42 newfile
+-rw------- 1 user1 user1   0 Nov  6 19:33 nohup.out
+-rw-rw-r-- 1 user1 user1  81 Nov  6 20:39 outfile
+-rw-rw-r-- 1 user1 user1  24 Nov  7 17:21 output
+-rw-rw-r-- 1 user1 user1   0 Nov  4 18:45 pids
+-rw-rw-r-- 1 user1 user1   0 Oct 20 09:29 test.sh
+-rw-rw-r-- 1 user1 user1  48 Nov  7 19:41 testfile
+-rwxrwxr-x 1 user1 user1  26 Oct 27 07:24 text
+
+user1@lab:~$ awk 'BEGIN{FS="\n"; RS=""} {print $1,$3}' ./addresses
+Person Name (222) 466-1234
+Another person (523) 643-8754
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ awk 'BEGIN{print ARGC,ARGV[1]}' ./myfile
+2 ./myfile
+
+user1@lab:~$ awk '
+> BEGIN{
+> print ENVIRON["HOME"]
+> print ENVIRON["PATH"]
+> }'
+/home/user1
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+user1@lab:~$ echo | awk -v home=$HOME '{print "My home is " home}'
+My home is /home/user1
+
+user1@lab:~$ awk 'BEGIN{FS=":"; OFS=":"} {print $1,$NF}' /etc/passwd
+root:/bin/bash
+daemon:/usr/sbin/nologin
+bin:/usr/sbin/nologin
+sys:/usr/sbin/nologin
+sync:/bin/sync
+games:/usr/sbin/nologin
+man:/usr/sbin/nologin
+lp:/usr/sbin/nologin
+mail:/usr/sbin/nologin
+news:/usr/sbin/nologin
+uucp:/usr/sbin/nologin
+proxy:/usr/sbin/nologin
+www-data:/usr/sbin/nologin
+backup:/usr/sbin/nologin
+list:/usr/sbin/nologin
+irc:/usr/sbin/nologin
+gnats:/usr/sbin/nologin
+nobody:/usr/sbin/nologin
+systemd-timesync:/bin/false
+systemd-network:/bin/false
+systemd-resolve:/bin/false
+systemd-bus-proxy:/bin/false
+syslog:/bin/false
+_apt:/bin/false
+postfix:/bin/false
+sshd:/usr/sbin/nologin
+uuidd:/bin/false
+messagebus:/bin/false
+user1:/bin/bash
+user2:/bin/bash
+user3:/bin/bash
+user4:/bin/bash
+user5:/bin/bash
+user6:/bin/bash
+user7:/bin/bash
+user8:/bin/bash
+user9:/bin/bash
+user10:/bin/bash
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ awk 'BEGIN{FS=","}{print $1,"FNR="FNR}' ./myfile ./myfile
+This is a test. FNR=1
+This is the second test. FNR=2
+This is the thrid test. FNR=3
+This is the fourth test. FNR=4
+This is a test. FNR=1
+This is the second test. FNR=2
+This is the thrid test. FNR=3
+This is the fourth test. FNR=4
+
+user1@lab:~$ awk '
+> BEGIN {FS=","}
+> {print $1, "FNR="FNR, "NR="NR}
+> END{print "There were",NR,"records processed"}' ./myfile ./myfile
+This is a test. FNR=1 NR=1
+This is the second test. FNR=2 NR=2
+This is the thrid test. FNR=3 NR=3
+This is the fourth test. FNR=4 NR=4
+This is a test. FNR=1 NR=5
+This is the second test. FNR=2 NR=6
+This is the thrid test. FNR=3 NR=7
+This is the fourth test. FNR=4 NR=8
+There were 8 records processed
+
+user1@lab:~$ awk '
+> BEGIN{
+> test="This is a test"
+> print test
+> }'
+This is a test
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./testfile
+  
+  GNU nano 2.5.3                File: ./testfile                            Modified
+
+10
+15
+6
+33
+45
+
+user1@lab:~$ awk '{if ($1 > 20) print $1}' ./testfile
+33
+45
+
+user1@lab:~$ awk '{
+> if ($1 > 20)
+> {
+> x = $1 * 2
+> print x
+> }
+> }' ./testfile
+66
+90
+
+user1@lab:~$ awk '{
+if ($1 > 20)
+{
+x = $1 * 2
+print x
+}
+else
+{
+x = $1 / 2
+print x
+}}' ./testfile
+5
+7.5
+3
+66
+90
+
+user1@lab:~$ awk '{if ($1 > 20) print $1 * 2; else print $1 / 2}' ./testfile
+5
+7.5
+3
+66
+90
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./testfile
+  
+  GNU nano 2.5.3                File: ./testfile                            Modified
+
+124 127 130
+112 142 135
+175 158 245
+
+user1@lab:~$ awk '{
+> total = 0
+> i = 1
+> while (i < 4)
+> {
+> total += $i
+> i++
+> }
+> avg = total / 3
+> print "Average:",avg
+> }' ./testfile
+Average: 127
+Average: 129.667
+Average: 192.667
+
+user1@lab:~$ awk '{
+> total = 0
+> i = 1
+> while (i < 4)
+> {
+> total += $i
+> if (i == 2)
+> break
+> i++
+> }
+> avg = total / 2
+> print "The average of the first two elements is:",avg
+> }' ./testfile
+The average of the first two elements is: 125.5
+The average of the first two elements is: 127
+The average of the first two elements is: 166.5
+
+user1@lab:~$ awk '{
+> total = 0
+> for (i = 1; i < 4; i++)
+> {
+> total += $i
+> }
+> avg = total / 3
+> print "Average:",avg
+> }' ./testfile
+Average: 127
+Average: 129.667
+Average: 192.667
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ awk 'BEGIN{
+> x = 100 * 100
+> printf "The result is: %e\n", x
+> }'
+The result is: 1.000000e+04
+
+user1@lab:~$ awk 'BEGIN{x=exp(5); print x}'
+148.413
+
+user1@lab:~$ awk 'BEGIN{x = "user1"; print toupper(x)}'
+USER1
+
+user1@lab:~$ awk '
+> function myprint()
+> {
+> printf "The user %s has home path at %s\n", $1,$6
+> }
+> BEGIN{FS=":"}
+> {
+> myprint()
+> }' /etc/passwd
+The user root has home path at /root
+The user daemon has home path at /usr/sbin
+The user bin has home path at /bin
+The user sys has home path at /dev
+The user sync has home path at /bin
+The user games has home path at /usr/games
+The user man has home path at /var/cache/man
+The user lp has home path at /var/spool/lpd
+The user mail has home path at /var/mail
+The user news has home path at /var/spool/news
+The user uucp has home path at /var/spool/uucp
+The user proxy has home path at /bin
+The user www-data has home path at /var/www
+The user backup has home path at /var/backups
+The user list has home path at /var/list
+The user irc has home path at /var/run/ircd
+The user gnats has home path at /var/lib/gnats
+The user nobody has home path at /nonexistent
+The user systemd-timesync has home path at /run/systemd
+The user systemd-network has home path at /run/systemd/netif
+The user systemd-resolve has home path at /run/systemd/resolve
+The user systemd-bus-proxy has home path at /run/systemd
+The user syslog has home path at /home/syslog
+The user _apt has home path at /nonexistent
+The user postfix has home path at /var/spool/postfix
+The user sshd has home path at /var/run/sshd
+The user uuidd has home path at /run/uuidd
+The user messagebus has home path at /var/run/dbus
+The user user1 has home path at /home/user1
+The user user2 has home path at /home/user2
+The user user3 has home path at /home/user3
+The user user4 has home path at /home/user4
+The user user5 has home path at /home/user5
+The user user6 has home path at /home/user6
+The user user7 has home path at /home/user7
+The user user8 has home path at /home/user8
+The user user9 has home path at /home/user9
+The user user10 has home path at /home/user10
+
