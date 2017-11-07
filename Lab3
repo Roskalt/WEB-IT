@@ -2033,3 +2033,290 @@ user1@lab:~$ echo "name@host.com" | awk '/^([a-zA-Z0-9_\-\.\+]+)@([a-zA-Z0-9_\-\
 name@host.com
 user1@lab:~$ echo "name@host.com.us" | awk '/^([a-zA-Z0-9_\-\.\+]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/{print $0}'
 name@host.com.us
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ who
+root     pts/0        Oct 20 07:51
+user1    pts/2        Nov  7 16:15 (93.73.162.173)
+
+user1@lab:~$ who -l
+LOGIN    console      Oct 20 07:43               190 id=cons
+LOGIN    pts/1        Oct 20 07:43               192 id=ts/1
+
+user1@lab:~$ who -a
+           system boot  Oct 20 07:43
+           run-level 5  Oct 20 07:43
+LOGIN      console      Oct 20 07:43               190 id=cons
+LOGIN      pts/1        Oct 20 07:43               192 id=ts/1
+root     - pts/0        Oct 20 07:51  old          336
+user1    + pts/2        Nov  7 16:15   .         19822 (93.73.162.173)
+           pts/3        Nov  6 23:11              5088 id=ts/3  term=0 exit=0
+           pts/4        Oct 27 08:16             25203 id=ts/4  term=0 exit=0
+           pts/5        Oct 27 08:11             25369 id=ts/5  term=0 exit=0
+
+user1@lab:~$ who -d
+         pts/3        Nov  6 23:11              5088 id=ts/3  term=0 exit=0
+         pts/4        Oct 27 08:16             25203 id=ts/4  term=0 exit=0
+         pts/5        Oct 27 08:11             25369 id=ts/5  term=0 exit=0
+
+user1@lab:~$ who -T
+root     - pts/0        Oct 20 07:51
+user1    + pts/2        Nov  7 16:15 (93.73.162.173)
+
+
+user1@lab:~$ mesg
+is y
+user1@lab:~$ mesg y
+user1@lab:~$ mesg
+is y
+
+
+user1@lab:~$ who -T
+root     - pts/0        Oct 20 07:51
+user1    + pts/2        Nov  7 16:15 (93.73.162.173)
+user1@lab:~$ write root pts/0
+write: root has messages disabled on pts/0
+user1@lab:~$ write user1 pts/2
+
+Message from user1@lab on pts/2 at 22:12 ...
+Hello
+Hello
+EOF
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ touch +x ./senderscript
+user1@lab:~$ chmod +x ./senderscript
+
+user1@lab:~$ nano ./senderscript
+  
+  GNU nano 2.5.3              File: ./senderscript                          Modified
+
+#!/bin/bash/
+
+logged_on=$(who | grep -i -m 1 $1 | awk '{print $1}')
+
+if [ -z $logged_on ]
+then
+echo "$1 is not logged on."
+echo "Exit"
+exit
+fi
+
+user1@lab:~$ ./senderscript user1
+user1@lab:~$ ./senderscript root
+user1@lab:~$ ./senderscript kik
+kik is not logged on.
+Exit
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./senderscript
+  
+  GNU nano 2.5.3              File: ./senderscript                          Modified
+
+#!/bin/bash
+
+allowed=$(who -T | grep -i -m 1 $1 | awk '{print $2}')
+
+if [ "$allowed" != "+" ]
+then
+echo "$1 does not allowing messaging."
+echo "Exit"
+exit
+fi
+
+user1@lab:~$ ./senderscript user1
+user1@lab:~$ ./senderscript root
+root does not allowing messaging.
+Exit
+user1@lab:~$ ./senderscript kik
+kik does not allowing messaging.
+Exit
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./senderscript
+  
+  GNU nano 2.5.3              File: ./senderscript                          Modified
+
+#!/bin/bash
+
+if [ -z $2 ]
+then
+echo "No message parameter included."
+echo "Exit"
+exit
+fi
+
+user1@lab:~$ ./senderscript user1
+No message parameter included.
+Exit
+
+user1@lab:~$ ./senderscript root
+No message parameter included.
+Exit
+
+user1@lab:~$ ./senderscript kik
+No message parameter included.
+Exit
+
+user1@lab:~$ ./senderscript user1 Hello
+user1@lab:~$ ./senderscript root welcome
+user1@lab:~$ ./senderscript kik error
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./senderscript
+  
+  GNU nano 2.5.3              File: ./senderscript                          Modified
+
+#!/bin/bash
+
+logged_on=$(who | grep -i -m 1 $1 | awk '{print $1}')
+terminal=$(who | grep -i -m 1 $1 | awk '{print $2}')
+
+echo $2 | write $logged_on $terminal
+
+user1@lab:~$ who -T
+root     - pts/0        Oct 20 07:51
+user1    + pts/2        Nov  7 16:15 (93.73.162.173)
+
+user1@lab:~$ ./senderscript user1 Hello
+
+Message from user1@lab on pts/2 at 22:35 ...
+Hello
+EOF
+
+user1@lab:~$ ./senderscript root welcome
+write: root has messages disabled on pts/0
+
+user1@lab:~$ ./senderscript kik error
+usage: write user [tty]
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ ./senderscript user1 welcome to shell scripting
+
+Message from user1@lab on pts/2 at 22:38 ...
+welcome
+EOF
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./senderscript
+  
+  GNU nano 2.5.3              File: ./senderscript                          Modified
+
+#!/bin/bash
+
+logged_on=$(who | grep -i -m 1 $1 | awk '{print $1}')
+
+if [ -z $logged_on ]
+then
+echo "$1 is not logged on."
+echo "Exit"
+exit
+fi
+
+allowed=$(who -T | grep -i -m 1 $1 | awk '{print $2}')
+
+if [ $allowed != "+" ]
+then
+echo "$1 does not allowing messaging."
+echo "Exit"
+exit
+fi
+if [ -z $2 ]
+then
+echo "No message parameter included."
+echo "Exit"
+exit
+fi
+
+terminal=$(who | grep -i -m 1 $1 | awk '{print $2}')
+
+shift
+while [ -n "$1" ]
+do
+whole_message=$whole_message' '$1
+shift
+done
+echo $whole_message | write $logged_on $terminal
+
+user1@lab:~$ ./senderscript user1 welcome to shell scripting
+
+Message from user1@lab on pts/2 at 22:42 ...
+welcome to shell scripting
+EOF
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ du -s /var/log/
+101476  /var/log/
+
+user1@lab:~$ du -S /var/log/
+12      /var/log/fsck
+12      /var/log/apt
+4       /var/log/dist-upgrade
+101448  /var/log/
+
+user1@lab:~$ du -S /var/log/ | sort -rn
+101452  /var/log/
+12      /var/log/fsck
+12      /var/log/apt
+4       /var/log/dist-upgrade
+
+user1@lab:~$ du -S /var/log/ |
+> sort -rn |
+> sed '{11,$D; =}' |
+> sed 'N; s/\n/ /' |
+> awk '{printf $1 ":" "\t" $2 "\t" $3 "\n"}'
+1:      101472  /var/log/
+2:      12      /var/log/fsck
+3:      12      /var/log/apt
+4:      4       /var/log/dist-upgrade
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myscript
+  GNU nano 2.5.3                File: ./myscript                            Modified
+
+#!/bin/bash
+
+MY_DIRECTORIES="/home /var/log"
+echo "Top Ten Disk Space Usage"
+
+for DIR in $MY_DIRECTORIES
+do
+echo "The $DIR Directory:"
+du -S $DIR 2>/dev/null |
+sort -rn |
+sed '{11,$D; =}' |
+sed 'N; s/\n/ /' |
+awk '{printf $1 ":" "\t" $2 "\t" $3 "\n"}'
+done
+
+exit
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ ./myscript
+Top Ten Disk Space Usage
+The /home Directory:
+1:      164     /home/user1
+2:      12      /home/user7
+3:      12      /home/user10
+4:      8       /home/user9
+5:      8       /home/user3
+6:      8       /home/user2
+7:      4       /home/user9/.cache
+8:      4       /home/user8
+9:      4       /home/user7/.ssh
+10:     4       /home/user7/.nano
+The /var/log Directory:
+1:      101512  /var/log
+2:      12      /var/log/fsck
+3:      12      /var/log/apt
+4:      4       /var/log/dist-upgrade
