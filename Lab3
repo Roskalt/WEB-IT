@@ -660,67 +660,796 @@ The result is: 30
 
 -----------------------------------------------------------------------------------------
 
-user1@lab:~$ nano ./myscript
+user1@lab:~$ echo "This is a test" | sed 's/test/another test/'
+This is a another test
 
-  GNU nano 2.5.3              File: ./myscript                        Modified
+-----------------------------------------------------------------------------------------
 
-#!/bin/bash
+user1@lab:~$ nano ./myfile
+
+  GNU nano 2.5.3              File: ./myfile                        Modified
+
+This is a test
+
+user1@lab:~$ cat ./myfile
+This is a test
+user1@lab:~$ sed 's/test/another test/' ./myfile
+This is a another test
+
+user1@lab:~$ cat ./myfile
+This is a test
+user1@lab:~$ sed -e 's/This/That/; s/test/another test/' ./myfile
+That is a another test
+
+user1@lab:~$ cat ./myfile
+This is a test
+user1@lab:~$ sed -e'
+> s/This/That/
+> s/test/another test/' ./myfile
+That is a another test
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./mycommands
+  
+  GNU nano 2.5.3             File: ./mycommands                       Modified
+
+s/This/That/
+s/test/another test/
+
+user1@lab:~$ sed -f ./mycommands ./myfile
+That is a another test
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myfile
+  
+  GNU nano 2.5.3              File: ./myfile                          Modified
+
+This is a test and I like this test.
+This is the next test of the test scripts.
+
+user1@lab:~$ sed 's/test/another test/' ./myfile
+This is a another test and I like this test.
+This is the next another test of the test scripts.
+
+user1@lab:~$ sed 's/test/another test/2' ./myfile
+This is a test and I like this another test.
+This is the next test of the another test scripts.
+
+user1@lab:~$ sed 's/test/another test/g' ./myfile
+This is a another test and I like this another test.
+This is the next another test of the another test scripts.
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myfile
+
+  GNU nano 2.5.3              File: ./myfile                          Modified
+
+This is a test.
+This is a different one.
+
+user1@lab:~$ sed -n 's/test/another test/p' ./myfile
+This is a another test.
+
+user1@lab:~$ sed 's/test/another test/w output' ./myfile
+This is a another test.
+This is a different one.
+
+user1@lab:~$ cat output
+This is a another test.
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ sed 's/\/bin\/bash/\/bin\/csh/' /etc/passwd
+root:x:0:0:root:/root:/bin/csh
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+systemd-timesync:x:100:102:systemd Time Synchronization,,,:/run/systemd:/bin/false
+systemd-network:x:101:103:systemd Network Management,,,:/run/systemd/netif:/bin/false
+systemd-resolve:x:102:104:systemd Resolver,,,:/run/systemd/resolve:/bin/false
+systemd-bus-proxy:x:103:105:systemd Bus Proxy,,,:/run/systemd:/bin/false
+syslog:x:104:109::/home/syslog:/bin/false
+_apt:x:105:65534::/nonexistent:/bin/false
+postfix:x:106:112::/var/spool/postfix:/bin/false
+sshd:x:107:65534::/var/run/sshd:/usr/sbin/nologin
+uuidd:x:108:115::/run/uuidd:/bin/false
+messagebus:x:109:116::/var/run/dbus:/bin/false
+user1:x:1000:1000::/home/user1:/bin/csh
+user2:x:1001:1001::/home/user2:/bin/csh
+user3:x:1002:1002::/home/user3:/bin/csh
+user4:x:1003:1003::/home/user4:/bin/csh
+user5:x:1004:1004::/home/user5:/bin/csh
+user6:x:1005:1005::/home/user6:/bin/csh
+user7:x:1006:1006::/home/user7:/bin/csh
+user8:x:1007:1007::/home/user8:/bin/csh
+user9:x:1008:1008::/home/user9:/bin/csh
+user10:x:1009:1009::/home/user10:/bin/csh
+
+user1@lab:~$ sed 's!/bin/bash!/bin/csh!' /etc/passwd
+root:x:0:0:root:/root:/bin/csh
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologi                                                                             n
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+systemd-timesync:x:100:102:systemd Time Synchronization,,,:/run/systemd:/bin/fal                                                                             se
+systemd-network:x:101:103:systemd Network Management,,,:/run/systemd/netif:/bin/                                                                             false
+systemd-resolve:x:102:104:systemd Resolver,,,:/run/systemd/resolve:/bin/false
+systemd-bus-proxy:x:103:105:systemd Bus Proxy,,,:/run/systemd:/bin/false
+syslog:x:104:109::/home/syslog:/bin/false
+_apt:x:105:65534::/nonexistent:/bin/false
+postfix:x:106:112::/var/spool/postfix:/bin/false
+sshd:x:107:65534::/var/run/sshd:/usr/sbin/nologin
+uuidd:x:108:115::/run/uuidd:/bin/false
+messagebus:x:109:116::/var/run/dbus:/bin/false
+user1:x:1000:1000::/home/user1:/bin/csh
+user2:x:1001:1001::/home/user2:/bin/csh
+user3:x:1002:1002::/home/user3:/bin/csh
+user4:x:1003:1003::/home/user4:/bin/csh
+user5:x:1004:1004::/home/user5:/bin/csh
+user6:x:1005:1005::/home/user6:/bin/csh
+user7:x:1006:1006::/home/user7:/bin/csh
+user8:x:1007:1007::/home/user8:/bin/csh
+user9:x:1008:1008::/home/user9:/bin/csh
+user10:x:1009:1009::/home/user10:/bin/csh
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myfile
+
+  GNU nano 2.5.3              File: ./myfile                          Modified
+
+This is a test.
+This is the second test.
+This is the thrid test.
+This is the fourth test.
+
+user1@lab:~$ sed '2s/test/another test/' ./myfile
+This is a test.
+This is the second another test.
+This is the thrid test.
+This is the fourth test.
+
+user1@lab:~$ sed '2,3s/test/another test/' ./myfile
+This is a test.
+This is the second another test.
+This is the thrid another test.
+This is the fourth test.
+
+user1@lab:~$ sed '2,$s/test/another test/' ./myfile
+This is a test.
+This is the second another test.
+This is the thrid another test.
+This is the fourth another test.
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ sed '/user1/s/bash/csh/' /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+systemd-timesync:x:100:102:systemd Time Synchronization,,,:/run/systemd:/bin/false
+systemd-network:x:101:103:systemd Network Management,,,:/run/systemd/netif:/bin/false
+systemd-resolve:x:102:104:systemd Resolver,,,:/run/systemd/resolve:/bin/false
+systemd-bus-proxy:x:103:105:systemd Bus Proxy,,,:/run/systemd:/bin/false
+syslog:x:104:109::/home/syslog:/bin/false
+_apt:x:105:65534::/nonexistent:/bin/false
+postfix:x:106:112::/var/spool/postfix:/bin/false
+sshd:x:107:65534::/var/run/sshd:/usr/sbin/nologin
+uuidd:x:108:115::/run/uuidd:/bin/false
+messagebus:x:109:116::/var/run/dbus:/bin/false
+user1:x:1000:1000::/home/user1:/bin/csh
+user2:x:1001:1001::/home/user2:/bin/bash
+user3:x:1002:1002::/home/user3:/bin/bash
+user4:x:1003:1003::/home/user4:/bin/bash
+user5:x:1004:1004::/home/user5:/bin/bash
+user6:x:1005:1005::/home/user6:/bin/bash
+user7:x:1006:1006::/home/user7:/bin/bash
+user8:x:1007:1007::/home/user8:/bin/bash
+user9:x:1008:1008::/home/user9:/bin/bash
+user10:x:1009:1009::/home/user10:/bin/csh
+
+user1@lab:~$ cat ./myfile
+This is a test.
+This is the second test.
+This is the thrid test.
+This is the fourth test.
+
+user1@lab:~$ sed '3d' ./myfile
+This is a test.
+This is the second test.
+This is the fourth test.
+
+user1@lab:~$ sed '2,3d' ./myfile
+This is a test.
+This is the fourth test.
+
+user1@lab:~$ sed '3,$d' ./myfile
+This is a test.
+This is the second test.
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myfile
+
+  GNU nano 2.5.3              File: ./myfile                          Modified
+
+This is a test.
+This is the second test.
+This is the thrid test.
+This is the fourth test.
+This is another line
+
+user1@lab:~$ cat ./myfile
+This is a test.
+This is the second test.
+This is the thrid test.
+This is the fourth test.
+This is another line
+
+user1@lab:~$ sed '/test/d' ./myfile
+This is another line
+
+user1@lab:~$ cat ./myfile
+This is a test.
+This is the second test.
+This is the thrid test.
+This is the fourth test.
+This is another line
+
+user1@lab:~$ sed '/second/,/fourth/d' ./myfile
+This is a test.
+This is another line
+
+user1@lab:~$ echo "Another test" | sed 'i\First test'
+First test
+Another test
+
+user1@lab:~$ echo "Another test" | sed 'a\First test'
+Another test
+First test
+
+user1@lab:~$ cat ./myfile
+This is a test.
+This is the second test.
+This is the thrid test.
+This is the fourth test.
+This is another line
+
+user1@lab:~$ sed '2i\This is the inserted line.' ./myfile
+This is a test.
+This is the inserted line.
+This is the second test.
+This is the thrid test.
+This is the fourth test.
+This is another line
+
+user1@lab:~$ sed '2a\This is the appended line.' ./myfile
+This is a test.
+This is the second test.
+This is the appended line.
+This is the thrid test.
+This is the fourth test.
+This is another line
+
+user1@lab:~$ cat ./myfile
+This is a test.
+This is the second test.
+This is the thrid test.
+This is the fourth test.
+This is another line
+
+user1@lab:~$ sed '3c\This is a modified line.' ./myfile
+This is a test.
+This is the second test.
+This is a modified line.
+This is the fourth test.
+This is another line
+
+user1@lab:~$ cat ./myfile
+This is a test.
+This is the second test.
+This is the thrid test.
+This is the fourth test.
+This is another line
+
+user1@lab:~$ sed '/This is/c This is a changed line of text.' ./myfile
+This is a changed line of text.
+This is a changed line of text.
+This is a changed line of text.
+This is a changed line of text.
+This is a changed line of text.
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myfile
+  
+  GNU nano 2.5.3              File: ./myfile                          Modified
+
+This is a test.1
+This is the second test.2
+This is the thrid test.3
+This is the fourth test.4
+This is another line5
+
+user1@lab:~$ cat ./myfile
+This is a test.1
+This is the second test.2
+This is the thrid test.3
+This is the fourth test.4
+This is another line5
+
+user1@lab:~$ sed 'y/123/567/' ./myfile
+This is a test.5
+This is the second test.6
+This is the thrid test.7
+This is the fourth test.4
+This is another line5
+
+user1@lab:~$ sed '=' ./myfile
+1
+This is a test.1
+2
+This is the second test.2
+3
+This is the thrid test.3
+4
+This is the fourth test.4
+5
+This is another line5
+
+user1@lab:~$ sed -n '/test/=' ./myfile
+1
+2
+3
+4
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./newfile
+  
+  GNU nano 2.5.3              File: ./newfile                          Modified
+
+First line in nefile
+Second line in newfile
+
+user1@lab:~$ cat ./newfile
+First line in nefile
+Second line in newfile
+
+user1@lab:~$ sed '3r ./newfile' ./myfile
+This is a test.
+This is the second test.
+This is the thrid test.
+First line in nefile
+Second line in newfile
+This is the fourth test.
+This is another line
+
+user1@lab:~$ cat ./myfile
+This is a test.
+This is the second test.
+This is the thrid test.
+This is the fourth test.
+This is another line
+
+user1@lab:~$ cat ./newfile
+First line in nefile
+Second line in newfile
+
+user1@lab:~$ sed '/test/r ./newfile' ./myfile
+This is a test.
+First line in nefile
+Second line in newfile
+This is the second test.
+First line in nefile
+Second line in newfile
+This is the thrid test.
+First line in nefile
+Second line in newfile
+This is the fourth test.
+First line in nefile
+Second line in newfile
+This is another line
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./newfile
+  
+  GNU nano 2.5.3              File: ./newfile                         Modified
+
+First part of the data
+Second part of the data
+
+user1@lab:~$ nano ./myfile
+  
+  GNU nano 2.5.3              File: ./myfile                          Modified
+
+This is a test.
+This is the second test.
+This is the thrid test.
+DATA
+This is the fourth test.
+This is another line
+
+user1@lab:~$ cat ./newfile
+First part of the data
+Second part of the data
+
+user1@lab:~$ cat ./myfile
+This is a test.
+This is the second test.
+This is the thrid test.
+DATA
+This is the fourth test.
+This is another line
+
+user1@lab:~$ sed '/DATA/ {
+> r ./newfile
+> d}' ./myfile
+This is a test.
+This is the second test.
+This is the thrid test.
+First part of the data
+Second part of the data
+This is the fourth test.
+This is another line
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ awk '{print "Welcome to awk command tutorial"}'
+
+Welcome to awk command tutorial
+
+Welcome to awk command tutorial
+
+Welcome to awk command tutorial
+
+Welcome to awk command tutorial
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myfile
+  
+  GNU nano 2.5.3              File: ./myfile                          Modified
+
+This is a test.
+This is the second test.
+This is the thrid test.
+This is the fourth test.
+
+user1@lab:~$ cat ./myfile
+This is a test.
+This is the second test.
+This is the thrid test.
+This is the fourth test.
+
+user1@lab:~$ awk '{print $1}' ./myfile
+This
+This
+This
+This
+
+user1@lab:~$ awk -F: '{print $1}' /etc/passwd
+root
+daemon
+bin
+sys
+sync
+games
+man
+lp
+mail
+news
+uucp
+proxy
+www-data
+backup
+list
+irc
+gnats
+nobody
+systemd-timesync
+systemd-network
+systemd-resolve
+systemd-bus-proxy
+syslog
+_apt
+postfix
+sshd
+uuidd
+messagebus
+user1
+user2
+user3
+user4
+user5
+user6
+user7
+user8
+user9
+user10
+
+user1@lab:~$ echo "My name is Tom" | awk '{$4="Adam"; print $0}'
+My name is Adam
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./testfile
+  
+  GNU nano 2.5.3              File: ./testfile                        Modified
+
+{print $1 " has a  home directory at " $6}
+
+user1@lab:~$ awk -F: -f testfile /etc/passwd
+root has a home directory at /root
+daemon has a home directory at /usr/sbin
+bin has a home directory at /bin
+sys has a home directory at /dev
+sync has a home directory at /bin
+games has a home directory at /usr/games
+man has a home directory at /var/cache/man
+lp has a home directory at /var/spool/lpd
+mail has a home directory at /var/mail
+news has a home directory at /var/spool/news
+uucp has a home directory at /var/spool/uucp
+proxy has a home directory at /bin
+www-data has a home directory at /var/www
+backup has a home directory at /var/backups
+list has a home directory at /var/list
+irc has a home directory at /var/run/ircd
+gnats has a home directory at /var/lib/gnats
+nobody has a home directory at /nonexistent
+systemd-timesync has a home directory at /run/systemd
+systemd-network has a home directory at /run/systemd/netif
+systemd-resolve has a home directory at /run/systemd/resolve
+systemd-bus-proxy has a home directory at /run/systemd
+syslog has a home directory at /home/syslog
+_apt has a home directory at /nonexistent
+postfix has a home directory at /var/spool/postfix
+sshd has a home directory at /var/run/sshd
+uuidd has a home directory at /run/uuidd
+messagebus has a home directory at /var/run/dbus
+user1 has a home directory at /home/user1
+user2 has a home directory at /home/user2
+user3 has a home directory at /home/user3
+user4 has a home directory at /home/user4
+user5 has a home directory at /home/user5
+user6 has a home directory at /home/user6
+user7 has a home directory at /home/user7
+user8 has a home directory at /home/user8
+user9 has a home directory at /home/user9
+user10 has a home directory at /home/user10
+
+user1@lab:~$ nano ./testfile
+  
+  GNU nano 2.5.3              File: ./testfile                        Modified
+
+{
+text = " has a home directory at "
+print $1 text $6
+}
+
+user1@lab:~$ awk -F: -f testfile /etc/passwd
+root has a home directory at /root
+daemon has a home directory at /usr/sbin
+bin has a home directory at /bin
+sys has a home directory at /dev
+sync has a home directory at /bin
+games has a home directory at /usr/games
+man has a home directory at /var/cache/man
+lp has a home directory at /var/spool/lpd
+mail has a home directory at /var/mail
+news has a home directory at /var/spool/news
+uucp has a home directory at /var/spool/uucp
+proxy has a home directory at /bin
+www-data has a home directory at /var/www
+backup has a home directory at /var/backups
+list has a home directory at /var/list
+irc has a home directory at /var/run/ircd
+gnats has a home directory at /var/lib/gnats
+nobody has a home directory at /nonexistent
+systemd-timesync has a home directory at /run/systemd
+systemd-network has a home directory at /run/systemd/netif
+systemd-resolve has a home directory at /run/systemd/resolve
+systemd-bus-proxy has a home directory at /run/systemd
+syslog has a home directory at /home/syslog
+_apt has a home directory at /nonexistent
+postfix has a home directory at /var/spool/postfix
+sshd has a home directory at /var/run/sshd
+uuidd has a home directory at /run/uuidd
+messagebus has a home directory at /var/run/dbus
+user1 has a home directory at /home/user1
+user2 has a home directory at /home/user2
+user3 has a home directory at /home/user3
+user4 has a home directory at /home/user4
+user5 has a home directory at /home/user5
+user6 has a home directory at /home/user6
+user7 has a home directory at /home/user7
+user8 has a home directory at /home/user8
+user9 has a home directory at /home/user9
+user10 has a home directory at /home/user10
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ awk 'BEGIN {print "The File Contents:"}
+> {print $0}' ./myfile
+The File Contents:
+This is a test.
+This is the second test.
+This is the thrid test.
+This is the fourth test.
+
+user1@lab:~$ awk 'BEGIN {print "The File Contents:"}
+> {print $0}
+> END {print "END of File"}' ./myfile
+The File Contents:
+This is a test.
+This is the second test.
+This is the thrid test.
+This is the fourth test.
+END of File
 
 -----------------------------------------------------------------------------------------
 
 user1@lab:~$ nano ./myscript
-
+  
   GNU nano 2.5.3              File: ./myscript                        Modified
 
-#!/bin/bash
+BEGIN {
+print "The latest list of users and shells"
+print " UserName \t HomePath"
+print "-------- \t -------"
+FS=":"
+}
+{
+print $1 " \t\t " $6
+}
+END {
+print "The end"
+}
+
+user1@lab:~$ awk -f ./myscript  /etc/passwd
+The latest list of users and shells
+ UserName        HomePath
+--------         -------
+root             /root
+daemon           /usr/sbin
+bin              /bin
+sys              /dev
+sync             /bin
+games            /usr/games
+man              /var/cache/man
+lp               /var/spool/lpd
+mail             /var/mail
+news             /var/spool/news
+uucp             /var/spool/uucp
+proxy            /bin
+www-data                 /var/www
+backup           /var/backups
+list             /var/list
+irc              /var/run/ircd
+gnats            /var/lib/gnats
+nobody           /nonexistent
+systemd-timesync                 /run/systemd
+systemd-network                  /run/systemd/netif
+systemd-resolve                  /run/systemd/resolve
+systemd-bus-proxy                /run/systemd
+syslog           /home/syslog
+_apt             /nonexistent
+postfix                  /var/spool/postfix
+sshd             /var/run/sshd
+uuidd            /run/uuidd
+messagebus               /var/run/dbus
+user1            /home/user1
+user2            /home/user2
+user3            /home/user3
+user4            /home/user4
+user5            /home/user5
+user6            /home/user6
+user7            /home/user7
+user8            /home/user8
+user9            /home/user9
+user10           /home/user10
+The end
 
 -----------------------------------------------------------------------------------------
 
-user1@lab:~$ nano ./myscript
-
-  GNU nano 2.5.3              File: ./myscript                        Modified
-
-#!/bin/bash
+user1@lab:~$ awk 'BEGIN{FS=":"; OFS="-"} {print $1,$6,$7}' /etc/passwd
+root-/root-/bin/bash
+daemon-/usr/sbin-/usr/sbin/nologin
+bin-/bin-/usr/sbin/nologin
+sys-/dev-/usr/sbin/nologin
+sync-/bin-/bin/sync
+games-/usr/games-/usr/sbin/nologin
+man-/var/cache/man-/usr/sbin/nologin
+lp-/var/spool/lpd-/usr/sbin/nologin
+mail-/var/mail-/usr/sbin/nologin
+news-/var/spool/news-/usr/sbin/nologin
+uucp-/var/spool/uucp-/usr/sbin/nologin
+proxy-/bin-/usr/sbin/nologin
+www-data-/var/www-/usr/sbin/nologin
+backup-/var/backups-/usr/sbin/nologin
+list-/var/list-/usr/sbin/nologin
+irc-/var/run/ircd-/usr/sbin/nologin
+gnats-/var/lib/gnats-/usr/sbin/nologin
+nobody-/nonexistent-/usr/sbin/nologin
+systemd-timesync-/run/systemd-/bin/false
+systemd-network-/run/systemd/netif-/bin/false
+systemd-resolve-/run/systemd/resolve-/bin/false
+systemd-bus-proxy-/run/systemd-/bin/false
+syslog-/home/syslog-/bin/false
+_apt-/nonexistent-/bin/false
+postfix-/var/spool/postfix-/bin/false
+sshd-/var/run/sshd-/usr/sbin/nologin
+uuidd-/run/uuidd-/bin/false
+messagebus-/var/run/dbus-/bin/false
+user1-/home/user1-/bin/bash
+user2-/home/user2-/bin/bash
+user3-/home/user3-/bin/bash
+user4-/home/user4-/bin/bash
+user5-/home/user5-/bin/bash
+user6-/home/user6-/bin/bash
+user7-/home/user7-/bin/bash
+user8-/home/user8-/bin/bash
+user9-/home/user9-/bin/bash
+user10-/home/user10-/bin/bash
 
 -----------------------------------------------------------------------------------------
 
-user1@lab:~$ nano ./myscript
+user1@lab:~$ nano ./testfile
+  
+  GNU nano 2.5.3               File: ./testfile                          Modified
 
-  GNU nano 2.5.3              File: ./myscript                        Modified
+1235.9652147.91
+927-8.365217.27
+36257.8157492.5
 
-#!/bin/bash
 
------------------------------------------------------------------------------------------
-
-user1@lab:~$ nano ./myscript
-
-  GNU nano 2.5.3              File: ./myscript                        Modified
-
-#!/bin/bash
-
------------------------------------------------------------------------------------------
-
-user1@lab:~$ nano ./myscript
-
-  GNU nano 2.5.3              File: ./myscript                        Modified
-
-#!/bin/bash
-
------------------------------------------------------------------------------------------
-
-user1@lab:~$ nano ./myscript
-
-  GNU nano 2.5.3              File: ./myscript                        Modified
-
-#!/bin/bash
-
------------------------------------------------------------------------------------------
-
-user1@lab:~$ nano ./myscript
-
-  GNU nano 2.5.3              File: ./myscript                        Modified
-
-#!/bin/bash
 
 -----------------------------------------------------------------------------------------
 
