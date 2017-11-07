@@ -1751,3 +1751,285 @@ The user user8 has home path at /home/user8
 The user user9 has home path at /home/user9
 The user user10 has home path at /home/user10
 
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ echo "This is a test" | sed -n '/test/p'
+This is a test
+
+user1@lab:~$ echo "This is a test" | awk '/test/{print $0}'
+This is a test
+
+user1@lab:~$ echo "This is a test" | awk '/Test/{print $0}'
+user1@lab:~$ echo "This is a test" | awk '/test/{print $0}'
+This is a test
+
+user1@lab:~$ echo "This is a test 2 again" | awk '/test 2/{print $0}'
+This is a test 2 again
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myfile
+  
+  GNU nano 2.5.3                File: ./myfile                              Modified
+
+There is 10$ on my pocket
+
+user1@lab:~$ awk '/\$/{print $0}' ./myfile
+There is 10$ on my pocket
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ echo "\ is a special character" | awk '/\\/{print $0}'
+\ is a special character
+
+user1@lab:~$ echo "3 / 2" | awk '///{print $0}'
+awk: line 1: syntax error at or near {
+
+user1@lab:~$ echo "3 / 2" | awk '/\//{print $0}'
+3 / 2
+
+user1@lab:~$ echo "welcome to user1 website" | awk '/^user1/{print $0}'
+user1@lab:~$ echo "user1 website" | awk '/^user1/{print $0}'
+user1 website
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myfile
+  GNU nano 2.5.3                File: ./myfile                              Modified
+
+this is a test
+This is another test
+And this is one more
+
+user1@lab:~$ awk '/^this/{print $0}' ./myfile
+this is a test
+
+user1@lab:~$ echo "This ^ is a test" | sed -n '/s ^/p'
+This ^ is a test
+
+user1@lab:~$ echo "This ^ is a test" | awk '/s \^/{print $0}'
+This ^ is a test
+
+user1@lab:~$ echo "This is a test" | awk '/test$/{print $0}'
+This is a test
+
+user1@lab:~$ cat ./myfile
+this is a test
+This is another test
+And this is one more
+
+user1@lab:~$ awk '/^this is a test$/{print $0}' ./myfile
+this is a test
+
+user1@lab:~$ awk '!/^$/{print $0}' ./myfile
+this is a test
+This is another test
+And this is one more
+
+user1@lab:~$ cat ./myfile
+this is a test
+This is another test
+And this is one more
+start with this
+
+user1@lab:~$ awk '/.st/{print $0}' ./myfile
+this is a test
+This is another test
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ nano ./myfile
+  
+  GNU nano 2.5.3                File: ./myfile                              Modified
+
+this is a test
+This is another test
+And this is one more
+start with this
+
+user1@lab:~$ awk '/[oi]th/{print $0}' ./myfile
+This is another test
+start with this
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ echo "this is a test" | awk '/[Tt]his is a test/{print $0}'
+this is a test
+
+user1@lab:~$ echo "This is a test" | awk '/[Tt]his is a test/{print $0}'
+This is a test
+
+user1@lab:~$ cat ./myfile
+this is a test
+This is another test
+And this is one more
+start with this
+
+user1@lab:~$ awk '/[^oi]th/{print $0}' ./myfile
+And this is one more
+start with this
+
+user1@lab:~$ cat ./myfile
+this is a test
+This is another test
+And this is one more
+start with this
+
+user1@lab:~$ awk '/[e-p]st/{print $0}' ./myfile
+this is a test
+This is another test
+
+user1@lab:~$ echo "123" | awk '/[0-9][0-9][0-9]/'
+123
+user1@lab:~$ echo "12a" | awk '/[0-9][0-9][0-9]/'
+
+user1@lab:~$ cat ./myfile
+this is a test
+This is another test
+And this is one more
+start with this
+
+user1@lab:~$ awk '/[a-fm-z]st/{print $0}' ./myfile
+this is a test
+This is another test
+
+user1@lab:~$ echo "abc" | awk '/[[:alpha:]]/{print $0}'
+abc
+user1@lab:~$ echo "abc" | awk '/[[:digit:]]/{print $0}'
+user1@lab:~$ echo "abc123" | awk '/[[:digit:]]/{print $0}'
+123
+
+user1@lab:~$ echo "test" | awk '/tes*t/{print $0}'
+test
+user1@lab:~$ echo "tessst" | awk '/tes*t/{print $0}'
+tessst
+
+user1@lab:~$ echo "I like green color" | awk '/colou*r/{print $0}'
+I like green color
+user1@lab:~$ echo "I like green colour" | awk '/colou*r/{print $0}'
+I like green colour
+
+user1@lab:~$ cat ./myfile
+this is a test
+This is another test
+And this is one more
+start with this
+
+user1@lab:~$ awk '/this.*test/{print $0}' ./myfile
+this is a test
+
+user1@lab:~$ echo "st" | awk '/s[ae]*t/{print $0}'
+st
+user1@lab:~$ echo "sat" | awk '/s[ae]*t/{print $0}'
+sat
+user1@lab:~$ echo "set" | awk '/s[ae]*t/{print $0}'
+set
+user1@lab:~$ echo "sit" | awk '/s[ae]*t/{print $0}'
+user1@lab:~$ echo "s1t" | awk '/s[ae]*t/{print $0}'
+
+
+user1@lab:~$ echo "tet" | awk '/tes?t/{print $0}'
+tet
+user1@lab:~$ echo "test" | awk '/tes?t/{print $0}'
+test
+user1@lab:~$ echo "tesst" | awk '/tes?t/{print $0}'
+
+
+user1@lab:~$ echo "tst" | awk '/t[ae]?st/{print $0}'
+tst
+user1@lab:~$ echo "test" | awk '/t[ae]?st/{print $0}'
+test
+user1@lab:~$ echo "tast" | awk '/t[ae]?st/{print $0}'
+tast
+user1@lab:~$ echo "taest" | awk '/t[ae]?st/{print $0}'
+user1@lab:~$ echo "teest" | awk '/t[ae]?st/{print $0}'
+
+
+user1@lab:~$ echo "test" | awk '/te+st/{print $0}'
+test
+user1@lab:~$ echo "teest" | awk '/te+st/{print $0}'
+teest
+user1@lab:~$ echo "tst" | awk '/te+st/{print $0}'
+
+
+user1@lab:~$ echo "tst" | awk '/t[ae]+st/{print $0}'
+user1@lab:~$ echo "test" | awk '/t[ae]+st/{print $0}'
+test
+user1@lab:~$ echo "teast" | awk '/t[ae]+st/{print $0}'
+teast
+user1@lab:~$ echo "teeast" | awk '/t[ae]+st/{print $0}'
+teeast
+
+
+user1@lab:~$ echo "tst" | awk '/te{1}st/{print $0}'
+user1@lab:~$ echo "test" | awk '/te{1}st/{print $0}'
+test
+
+
+user1@lab:~$ echo "tst" | awk '/te{1,2}st/{print $0}'
+user1@lab:~$ echo "test" | awk '/te{1,2}st/{print $0}'
+test
+user1@lab:~$ echo "teest" | awk '/te{1,2}st/{print $0}'
+teest
+user1@lab:~$ echo "teeest" | awk '/te{1,2}st/{print $0}'
+
+
+user1@lab:~$ echo "tst" | awk  '/t[ae]{1,2}st/{print $0}'
+user1@lab:~$ echo "test" | awk  '/t[ae]{1,2}st/{print $0}'
+test
+user1@lab:~$ echo "teest" | awk  '/t[ae]{1,2}st/{print $0}'
+teest
+user1@lab:~$ echo "teeast" | awk  '/t[ae]{1,2}st/{print $0}'
+
+
+user1@lab:~$ echo "This is a test" | awk '/test|exam/{print $0}'
+This is a test
+user1@lab:~$ echo "This is an exam" | awk '/test|exam/{print $0}'
+This is an exam
+user1@lab:~$ echo "This is something else" | awk '/test|exam/{print $0}'
+
+
+user1@lab:~$ echo "User" | awk '/User(1)?/{print $0}'
+User
+user1@lab:~$ echo "User1" | awk '/User(1)?/{print $0}'
+User1
+
+-----------------------------------------------------------------------------------------
+
+user1@lab:~$ echo $PATH | sed 's/:/ /g'
+/usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/games /usr/local/games
+
+user1@lab:~$ nano ./myscript
+  GNU nano 2.5.3                File: ./myscript                            Modified
+
+#!/bin/bash
+
+mypath=$(echo $PATH | sed 's/:/ /g')
+
+count=0
+
+for directory in $mypath
+do
+check=$(ls $directory)
+for item in $check
+do
+count=$[ $count + 1 ]
+done
+echo "$directory - $count"
+count=0
+done
+
+user1@lab:~$ ./myscript
+/usr/local/sbin - 0
+/usr/local/bin - 0
+/usr/sbin - 117
+/usr/bin - 525
+/sbin - 148
+/bin - 154
+/usr/games - 0
+/usr/local/games - 0
+
+user1@lab:~$ echo "name@host.com" | awk '/^([a-zA-Z0-9_\-\.\+]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/{print $0}'
+name@host.com
+user1@lab:~$ echo "name@host.com.us" | awk '/^([a-zA-Z0-9_\-\.\+]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/{print $0}'
+name@host.com.us
