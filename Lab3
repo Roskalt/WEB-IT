@@ -2300,8 +2300,6 @@ done
 
 exit
 
------------------------------------------------------------------------------------------
-
 user1@lab:~$ ./myscript
 Top Ten Disk Space Usage
 The /home Directory:
