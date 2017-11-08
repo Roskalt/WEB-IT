@@ -323,9 +323,9 @@ user1@lab:~$ cat pids
 
 user1@lab:~$ ps axuww | grep `whoami` | grep '\<task-6-server\>' | grep -v vim | grep -v less | awk '{print $2}' | wc -l | xargs kill -9
 
-Задання для тренування
+Завдання для тренування
 
-получите список всех файлов и каталогов в вашем домашнем каталоге;
+отримайте список усіх файлів і каталогів у вашому домашньому каталозі;
 
 user1@lab:~$ ls
 nano.save  pids  test.sh  text
@@ -480,7 +480,7 @@ user1@lab:/home$ find . -user user1
 user1@lab:/home$ find . -user user1 -name "text"
 ./user1/text
 
-получите список всех man-статей из категории 2 (системные вызовы);
+отримайте список всіх man-статей із категорії 2 (системні виклики); 
 
 user1@lab:~$ man 2 fork
 
@@ -594,7 +594,7 @@ SEE ALSO
 
 Linux 1.1.46			  1994-08-21				DUP(2)
 
-посчитайте, сколько раз в man-е по программе grep встречается слово grep;
+порахуйте, скільки разів у man-е по програмі grep зустрічається слово grep;
 
 user1@lab:~$ man -k grep
 bzegrep (1)          - search possibly bzip2 compressed files for a regular expression
@@ -617,7 +617,7 @@ grep (1)             - print lines matching a pattern
 pwd (1)              - print name of current/working directory
 whoami (1)           - print effective userid
 
-посчитайте, сколько процессов запущено в данный момент от имени пользователя root;
+порахуйте, скільки процесів запущено в даний момент від імені користувача root;
 
 user1@lab:~$ ps
   PID TTY          TIME CMD
@@ -693,7 +693,7 @@ user1@lab:~$ ps -e
 25374 ?        00:00:00 systemd
 25375 ?        00:00:00 (sd-pam)
 
-найдите, какая команда встречается в максимальном количестве категорий справки (man);
+знайдіть, яка команда зустрічається у максимальній кількості категорій справки (man);
 
 user1@lab:~$ man -k .| awk '{print $1}' | uniq -dc | sort -rn | head -1
       8 intro
