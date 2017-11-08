@@ -532,117 +532,312 @@ user1@lab:/home$ find . -user user1 -name "text"
 
 user1@lab:~$ man 2 fork
 
-FORK(2)			   Linux Programmer's Manual		       FORK(2)
+FORK(2)                    Linux Programmer's Manual                   FORK(2)
 
 NAME
-
        fork - create a child process
 
 SYNOPSIS
-
-       #include <sys/types.h>
        #include <unistd.h>
 
        pid_t fork(void);
 
 DESCRIPTION
+       fork()  creates  a new process by duplicating the calling process.  The
+       new process is referred to as the child process.  The  calling  process
+       is referred to as the parent process.
 
-       fork  creates a child process that differs from the parent process only
-       in its PID and PPID, and in the fact that resource utilizations are set
-       to 0.  File locks and pending signals are not inherited.
+       The child process and the parent process run in separate memory spaces.
+       At the time of fork() both memory spaces have the same content.  Memory
+       writes,  file  mappings (mmap(2)), and unmappings (munmap(2)) performed
+       by one of the processes do not affect the other.
 
-       Under Linux, fork is implemented using copy-on-write pages, so the only
-       penalty incurred by fork is the time and memory required	 to  duplicate
-       the parent's page tables, and to create a unique task structure for the
-       child.
+       The child process is an exact duplicate of the  parent  process  except
+       for the following points:
+	   
+       *  The child has its own unique process ID, and this PID does not match
+          the ID of any existing process group (setpgid(2)).
+
+       *  The child's parent process ID is the same as  the  parent's  process
+          ID.
+
+       *  The  child  does  not  inherit  its parent's memory locks (mlock(2),
+          mlockall(2)).
+
+       *  Process resource utilizations (getrusage(2)) and CPU  time  counters
+          (times(2)) are reset to zero in the child.
+
+       *  The  child's  set  of  pending  signals is initially empty (sigpend‐
+          ing(2)).
+
+       *  The child does not inherit semaphore  adjustments  from  its  parent
+          (semop(2)).
+
+       *  The  child does not inherit process-associated record locks from its
+          parent (fcntl(2)).  (On the other hand,  it  does  inherit  fcntl(2)
+          open file description locks and flock(2) locks from its parent.)
+		         *  The  child  does  not  inherit timers from its parent (setitimer(2),
+          alarm(2), timer_create(2)).
+
+       *  The child does not inherit outstanding asynchronous  I/O  operations
+          from its parent (aio_read(3), aio_write(3)), nor does it inherit any
+          asynchronous I/O contexts from its parent (see io_setup(2)).
+
+       The process attributes in the  preceding  list  are  all  specified  in
+       POSIX.1.   The parent and child also differ with respect to the follow‐
+       ing Linux-specific process attributes:
+
+       *  The child does not inherit directory change notifications  (dnotify)
+          from its parent (see the description of F_NOTIFY in fcntl(2)).
+
+       *  The  prctl(2)  PR_SET_PDEATHSIG  setting  is reset so that the child
+          does not receive a signal when its parent terminates.
+
+       *  The default timer slack value is set to the parent's  current  timer
+          slack value.  See the description of PR_SET_TIMERSLACK in prctl(2).
+
+       *  Memory mappings that have been marked with the madvise(2) MADV_DONT‐
+          FORK flag are not inherited across a fork().
+       *  The  termination  signal  of  the  child  is  always  SIGCHLD   (see
+          clone(2)).
+
+       *  The  port  access permission bits set by ioperm(2) are not inherited
+          by the child; the child must turn on any bits that it requires using
+          ioperm(2).
+
+       Note the following further points:
+
+       *  The  child  process  is  created  with  a single thread—the one that
+          called fork().  The entire virtual address space of  the  parent  is
+          replicated  in the child, including the states of mutexes, condition
+          variables, and other pthreads objects; the use of  pthread_atfork(3)
+          may be helpful for dealing with problems that this can cause.
+
+       *  After  a  fork(2)  in  a multithreaded program, the child can safely
+          call only async-signal-safe functions  (see  signal(7))  until  such
+          time as it calls execve(2).
+
+       *  The  child inherits copies of the parent's set of open file descrip‐
+          tors.  Each file descriptor in the child refers  to  the  same  open
+          file  description (see open(2)) as the corresponding file descriptor
+          in the parent.  This means that the two descriptors share open  file
+          status  flags, current file offset, and signal-driven I/O attributes
+          (see the description of F_SETOWN and F_SETSIG in fcntl(2)).
+
+       *  The child inherits copies of the parent's set of open message  queue
+          descriptors  (see  mq_overview(7)).   Each  descriptor  in the child
+          refers to the same open message queue description as the correspond‐
+          ing  descriptor  in the parent.  This means that the two descriptors
+          share the same flags (mq_flags).
+
+       *  The child inherits copies of the  parent's  set  of  open  directory
+          streams  (see  opendir(3)).   POSIX.1  says  that  the corresponding
+          directory streams in the parent and child may  share  the  directory
+          stream positioning; on Linux/glibc they do not.
 
 RETURN VALUE
-
-       On success, the PID of the child process is returned  in	 the  parent's
-       thread  of execution, and a 0 is returned in the child's thread of exe-
-       cution.	On failure, a -1 will be returned in the parent's context,  no
-       child process will be created, and errno will be set appropriately.
+       On success, the PID of the child process is returned in the parent, and
+       0 is returned in the child.  On failure, -1 is returned in the  parent,
+       no child process is created, and errno is set appropriately.
 
 ERRORS
+       EAGAIN
 
-       EAGAIN fork cannot allocate sufficient memory to copy the parent's page
-	      tables and allocate a task structure for the child.
+              A system-imposed limit on the number of threads was encountered.
+              There are a number of limits that may trigger  this  error:  the
+              RLIMIT_NPROC  soft  resource limit (set via setrlimit(2)), which
+              limits the number of processes and threads for a real  user  ID,
+              was  reached;  the  kernel's  system-wide limit on the number of
+              processes and threads, /proc/sys/kernel/threads-max, was reached
+              (see  proc(5));  or  the  maximum number of PIDs, /proc/sys/ker‐
+              nel/pid_max, was reached (see proc(5)).
 
-       ENOMEM fork failed to allocate the necessary kernel structures  because
-	      memory is tight.
+       EAGAIN The caller is operating under the SCHED_DEADLINE scheduling pol‐
+              icy and does not have the reset-on-fork flag set.  See sched(7).
+
+       ENOMEM fork()  failed  to  allocate  the  necessary  kernel  structures
+              because memory is tight.
+
+       ENOSYS fork() is not supported on this platform (for example,  hardware
+              without a Memory-Management Unit).
 
 CONFORMING TO
+       POSIX.1-2001, POSIX.1-2008, SVr4, 4.3BSD.
 
-       The fork call conforms to SVr4, SVID, POSIX, X/OPEN, BSD 4.3.
+NOTES
+       Under  Linux,  fork()  is implemented using copy-on-write pages, so the
+       only penalty that it incurs is the time and memory required  to  dupli‐
+       cate  the  parent's  page tables, and to create a unique task structure
+       for the child.
+
+   C library/kernel differences
+       Since version 2.3.3, rather than invoking the  kernel's  fork()  system
+       call,  the  glibc  fork()  wrapper that is provided as part of the NPTL
+       threading implementation invokes clone(2) with flags that  provide  the
+       same  effect  as  the  traditional  system  call.  (A call to fork() is
+       equivalent to a call to clone(2) specifying  flags  as  just  SIGCHLD.)
+       The  glibc wrapper invokes any fork handlers that have been established
+       using pthread_atfork(3).
+
+EXAMPLE
+       See pipe(2) and wait(2).
 
 SEE ALSO
+       clone(2),  execve(2),  exit(2),  setrlimit(2),  unshare(2),   vfork(2),
+       wait(2), daemon(3), capabilities(7), credentials(7)
 
-       clone(2), execve(2), vfork(2), wait(2)
+COLOPHON
+       This  page  is  part of release 4.04 of the Linux man-pages project.  A
+       description of the project, information about reporting bugs,  and  the
+       latest     version     of     this    page,    can    be    found    at
+       http://www.kernel.org/doc/man-pages/.
 
-Linux 1.2.9			  1995-06-10			       FORK(2)
-
+Linux                             2015-12-28                           FORK(2)
 
 
 user1@lab:~$ man 2 dup2
 
-DUP(2)			   Linux Programmer's Manual			DUP(2)
+DUP(2)                     Linux Programmer's Manual                    DUP(2)
 
 NAME
-
-       dup, dup2 - duplicate a file descriptor
+       dup, dup2, dup3 - duplicate a file descriptor
 
 SYNOPSIS
-
        #include <unistd.h>
 
        int dup(int oldfd);
        int dup2(int oldfd, int newfd);
 
+       #define _GNU_SOURCE             /* See feature_test_macros(7) */
+       #include <fcntl.h>              /* Obtain O_* constant definitions */
+       #include <unistd.h>
+
+       int dup3(int oldfd, int newfd, int flags);
+
 DESCRIPTION
+       The  dup()  system  call  creates  a copy of the file descriptor oldfd,
+       using the lowest-numbered unused descriptor for the new descriptor.
 
-       dup and dup2 create a copy of the file descriptor oldfd.
+       After a successful return, the old and new file descriptors may be used
+       interchangeably.   They  refer  to  the same open file description (see
+       open(2)) and thus share file offset and file status flags; for example,
+       if the file offset is modified by using lseek(2) on one of the descrip‐
+       tors, the offset is also changed for the other.
 
-       After successful return of dup or dup2, the old and new descriptors may
-       be used interchangeably. They share locks, file position	 pointers  and
-       flags;  for example, if the file position is modified by using lseek on
-       one of the descriptors, the position is also changed for the other.
+       The two descriptors do not share file descriptor flags  (the  close-on-
+       exec  flag).  The close-on-exec flag (FD_CLOEXEC; see fcntl(2)) for the
+       duplicate descriptor is off.
 
-       The two descriptors do not share the close-on-exec flag, however.
+   dup2()
+       The dup2() system call performs the same task as dup(), but instead  of
+       using  the lowest-numbered unused file descriptor, it uses the descrip‐
+       tor number specified in newfd.  If the descriptor newfd was  previously
+       open, it is silently closed before being reused.
 
-       dup uses the lowest-numbered unused descriptor for the new  descriptor.
+       The  steps  of  closing  and reusing the file descriptor newfd are per‐
+       formed atomically.  This is  important,  because  trying  to  implement
+       equivalent  functionality  using close(2) and dup() would be subject to
+       race conditions, whereby newfd might be reused between the  two  steps.
+       Such  reuse  could  happen because the main program is interrupted by a
+       signal handler that allocates a file descriptor, or because a  parallel
+       thread allocates a file descriptor.
 
-       dup2  makes  newfd  be the copy of oldfd, closing newfd first if neces-
-       sary.
+       Note the following points:
+
+       *  If  oldfd  is  not a valid file descriptor, then the call fails, and
+          newfd is not closed.
+
+       *  If oldfd is a valid file descriptor, and newfd has the same value as
+          oldfd, then dup2() does nothing, and returns newfd.
+
+   dup3()
+       dup3() is the same as dup2(), except that:
+
+       *  The  caller  can  force the close-on-exec flag to be set for the new
+          file descriptor by specifying O_CLOEXEC in flags.  See the  descrip‐
+          tion of the same flag in open(2) for reasons why this may be useful.
+
+       *  If oldfd equals newfd, then dup3() fails with the error EINVAL.
 
 RETURN VALUE
-
-       dup and dup2 return the new descriptor, or -1 if an error occurred  (in
-       which case, errno is set appropriately).
+       On success, these system calls return the new descriptor.  On error, -1
+       is returned, and errno is set appropriately.
 
 ERRORS
+       EBADF  oldfd isn't an open file descriptor.
 
-       EBADF  oldfd  isn't  an	open  file  descriptor, or newfd is out of the
-	      allowed range for file descriptors.
+       EBADF  newfd is out of the allowed range for file descriptors (see  the
+              discussion of RLIMIT_NOFILE in getrlimit(2)).
 
-       EMFILE The process already has the maximum number of  file  descriptors
-	      open and tried to open a new one.
+       EBUSY  (Linux  only)  This may be returned by dup2() or dup3() during a
+              race condition with open(2) and dup().
 
-WARNING
+       EINTR  The dup2() or dup3() call was interrupted by a signal; see  sig‐
+              nal(7).
 
-       The  error returned by dup2 is different to that returned by fcntl(...,
-       F_DUPFD, ...)  when newfd is out of range. On some  systems  dup2  also
-       sometimes returns EINVAL like F_DUPFD.
+       EINVAL (dup3()) flags contain an invalid value.
+
+       EINVAL (dup3()) oldfd was equal to newfd.
+
+       EMFILE The per-process limit on the number of open file descriptors has
+              been reached (see  the  discussion  of  RLIMIT_NOFILE  in  getr‐
+              limit(2)).
+
+VERSIONS
+       dup3() was added to Linux in version 2.6.27; glibc support is available
+       starting with version 2.9.
 
 CONFORMING TO
+       dup(), dup2(): POSIX.1-2001, POSIX.1-2008, SVr4, 4.3BSD.
 
-       SVr4, SVID, POSIX, X/OPEN, BSD 4.3. SVr4 documents additional EINTR and
-       ENOLINK error conditions.  POSIX.1 adds EINTR.
+       dup3() is Linux-specific.
+
+NOTES
+       The error returned  by  dup2()  is  different  from  that  returned  by
+       fcntl(..., F_DUPFD, ...)  when newfd is out of range.  On some systems,
+       dup2() also sometimes returns EINVAL like F_DUPFD.
+
+       If newfd was open, any errors that would have been reported at close(2)
+       time  are lost.  If this is of concern, then—unless the program is sin‐
+       gle-threaded and does not allocate file descriptors in signal handlers—
+       the  correct  approach  is  not  to  close newfd before calling dup2(),
+       because of the race condition described above.  Instead, code something
+       like the following could be used:
+
+           /* Obtain a duplicate of 'newfd' that can subsequently
+              be used to check for close() errors; an EBADF error
+              means that 'newfd' was not open. */
+
+           tmpfd = dup(newfd);
+           if (tmpfd == -1 && errno != EBADF) {
+               /* Handle unexpected dup() error */
+           }
+
+           /* Atomically duplicate 'oldfd' on 'newfd' */
+
+           if (dup2(oldfd, newfd) == -1) {
+               /* Handle dup2() error */
+           }
+
+           /* Now check for close() errors on the file originally
+              referred to by 'newfd' */
+
+           if (tmpfd != -1) {
+               if (close(tmpfd) == -1) {
+                   /* Handle errors from close */
+               }
+           }
 
 SEE ALSO
+       close(2), fcntl(2), open(2)
 
-       fcntl(2), open(2), close(2)
+COLOPHON
+       This  page  is  part of release 4.04 of the Linux man-pages project.  A
+       description of the project, information about reporting bugs,  and  the
+       latest     version     of     this    page,    can    be    found    at
+       http://www.kernel.org/doc/man-pages/.
 
-Linux 1.1.46			  1994-08-21				DUP(2)
+Linux                             2015-12-28                            DUP(2)
 
 
 порахуйте, скільки разів у man-е по програмі grep зустрічається слово grep;
