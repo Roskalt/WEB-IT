@@ -5,20 +5,26 @@ Welcome to Ubuntu 16.04 LTS (GNU/Linux 4.4.67-1-pve x86_64)
  * Documentation:  https://help.ubuntu.com/
 Last login: Thu Nov  2 15:06:02 2017 from 91.215.8.31
 
+
 user1@lab:~$ hostname
 lab
+
 
 user1@lab:~$ whoami
 user1
 
+
 user1@lab:~$ pwd
 /home/user1
+
 
 user1@lab:~$ date +"%y-%m-%d, %A"
 17-11-03, Friday
 
+
 user1@lab:~$ ls
 nano.save  test.sh  text
+
 
 user1@lab:~$ ls -l
 total 8
@@ -26,8 +32,10 @@ total 8
 -rw-rw-r-- 1 user1 user1  0 Oct 20 09:29 test.sh
 -rwxrwxr-x 1 user1 user1 26 Oct 27 07:24 text
 
+
 user1@lab:~$ ls -ld /home
 drwxr-xr-x 12 root root 4096 Oct 20 07:59 /home
+
 
 user1@lab:~$ ls -l /home
 total 40
@@ -42,8 +50,10 @@ drwxr-xr-x 2 user7  user7  4096 Oct 20 07:59 user7
 drwxr-xr-x 2 user8  user8  4096 Oct 20 07:59 user8
 drwxr-xr-x 3 user9  user9  4096 Oct 20 08:06 user9
 
+
 user1@lab:~$ grep root /etc/passwd
 root:x:0:0:root:/root:/bin/bash
+
 
 user1@lab:~$ man grep
 GREP(1)                     General Commands Manual                    GREP(1)
@@ -213,33 +223,41 @@ fi
 user1@lab:~$ ls -l text
 -rwxrwxr-x 1 user1 user1 26 Oct 27 07:24 text
 
+
 user1@lab:~$ wc
 good day today
 good day
       2       5      24
+
 
 user1@lab:~$ head -n3 /etc/passwd
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
 bin:x:2:2:bin:/bin:/usr/sbin/nologin
 
+
 user1@lab:~$ head -n3 /etc/passwd | wc
       3       3     117
+
 
 user1@lab:~$ head -n3 /etc/passwd | wc | wc
       1       3      24
 
+
 user1@lab:~$ date > /tmp/today.txt
 user1@lab:~$ cat /tmp/today.txt
 Fri Nov  3 09:06:23 UTC 2017
+
 
 user1@lab:~$ date >> /tmp/today.txt
 user1@lab:~$ cat /tmp/today.txt
 Fri Nov  3 09:06:23 UTC 2017
 Fri Nov  3 09:07:29 UTC 2017
 
+
 user1@lab:~$ wc < /etc/passwd
   38   50 1878
+
 
 user1@lab:~$ ps axuww
 USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
@@ -276,6 +294,7 @@ user1     7807  0.0  0.2  36468  2880 pts/2    R+   17:54   0:00 ps axuww
 user3    25374  0.0  0.4  47144  4860 ?        Ss   Oct27   0:00 /lib/systemd/systemd --user
 user3    25375  0.0  0.1  62740  1172 ?        S    Oct27   0:00 (sd-pam)
 
+
 user1@lab:~$ ps axuww | grep `whoami`
 user1     1365  0.0  0.3  47160  3788 ?        Ss   Oct20   0:00 /lib/systemd/systemd --user
 user1     1366  0.0  0.0  62648  1044 ?        S    Oct20   0:00 (sd-pam)
@@ -288,38 +307,51 @@ user1     7688  0.0  0.7  53044  8212 pts/2    T    17:38   0:00 vim
 user1     7815  0.0  0.2  36468  2916 pts/2    R+   17:55   0:00 ps axuww
 user1     7816  0.0  0.0  13332  1016 pts/2    S+   17:55   0:00 grep user1
 
+
 user1@lab:~$ ps axuww | grep `whoami` | grep '\<task-6-server\>'
 user1     8098  0.0  0.0  13332  1020 pts/2    S+   18:19   0:00 grep \<task-6-server\>
+
 
 user1@lab:~$ ps axuww | grep `whoami` | grep '\<task-6-server\>' | grep -v vim
 user1     8104  0.0  0.0  13332   936 pts/2    S+   18:19   0:00 grep \<task-6-server\>
 
+
 user1@lab:~$ ps axuww | grep `whoami` | grep '\<task-6-server\>' | grep -v vim | grep -v less
 user1     8109  0.0  0.0  13332   960 pts/2    S+   18:20   0:00 grep \<task-6-server\>
+
 
 user1@lab:~$ ps axuww | grep `whoami` | grep '\<task-6-server\>' | grep -v vim | grep -v less | awk '{print $2}'
 8120
 
+
 user1@lab:~$ ps axuww | grep `whoami` | grep '\<task-6-server\>' | grep -v vim | grep -v less | awk '{print $2}' | wc -l
 1
+
 user1@lab:~$ ps axuww | grep `whoami` | grep '\<task-6-server\>' | wc -l
 1
+
 user1@lab:~$ ps axuww | grep `whoami` | wc -l
 11
+
 user1@lab:~$ ps axuww | wc -l
 36
 
+
 user1@lab:~$ ps axuww | grep `whoami` | grep '\<task-6-server\>' | grep -v vim | grep -v less | awk '{print $2}' | wc -l >pids
+
 user1@lab:~$ ls
 nano.save  pids  test.sh  text
+
 user1@lab:~$ ls -l
 total 12
 -rw------- 1 user1 user1  2 Oct 27 07:41 nano.save
 -rw-rw-r-- 1 user1 user1  2 Nov  4 18:41 pids
 -rw-rw-r-- 1 user1 user1  0 Oct 20 09:29 test.sh
 -rwxrwxr-x 1 user1 user1 26 Oct 27 07:24 text
+
 user1@lab:~$ cat pids
 1
+
 
 user1@lab:~$ ps axuww | grep `whoami` | grep '\<task-6-server\>' | grep -v vim | grep -v less | awk '{print $2}' | wc -l | xargs kill -9
 
@@ -330,12 +362,14 @@ user1@lab:~$ ps axuww | grep `whoami` | grep '\<task-6-server\>' | grep -v vim |
 user1@lab:~$ ls
 nano.save  pids  test.sh  text
 
+
 user1@lab:~$ ls -l
 total 8
 -rw------- 1 user1 user1  2 Oct 27 07:41 nano.save
 -rw-rw-r-- 1 user1 user1  0 Nov  4 18:45 pids
 -rw-rw-r-- 1 user1 user1  0 Oct 20 09:29 test.sh
 -rwxrwxr-x 1 user1 user1 26 Oct 27 07:24 text
+
 
 user1@lab:~$ ls -lS
 total 8
@@ -344,6 +378,7 @@ total 8
 -rw-rw-r-- 1 user1 user1  0 Nov  4 18:45 pids
 -rw-rw-r-- 1 user1 user1  0 Oct 20 09:29 test.sh
 
+
 user1@lab:~$ ls -lt
 total 8
 -rw-rw-r-- 1 user1 user1  0 Nov  4 18:45 pids
@@ -351,20 +386,26 @@ total 8
 -rwxrwxr-x 1 user1 user1 26 Oct 27 07:24 text
 -rw-rw-r-- 1 user1 user1  0 Oct 20 09:29 test.sh
 
+
 user1@lab:~$ ls -ld
 drwxr-xr-x 4 user1 user1 4096 Nov  4 18:39 .
+
 
 user1@lab:~$ ls -ld /etc
 drwxr-xr-x 77 root root 4096 Oct 20 07:59 /etc
 
+
 user1@lab:~$ ls -ld /etc/passwd
 -rw-r--r-- 1 root root 1878 Oct 20 07:58 /etc/passwd
+
 
 user1@lab:~$ ls -ld /home
 drwxr-xr-x 12 root root 4096 Oct 20 07:59 /home
 
+
 user1@lab:~$ ls -a
 .  ..  .bash_history  .cache  .nano  .swm  .swn  .swo  .swp  .test.sh.swo  .test.sh.swp  .viminfo  nano.save  pids  test.sh  text
+
 
 user1@lab:~$ ls -all
 total 104
@@ -385,6 +426,7 @@ drwxrwxr-x  2 user1 user1  4096 Oct 27 07:19 .nano
 -rw-rw-r--  1 user1 user1     0 Oct 20 09:29 test.sh
 -rwxrwxr-x  1 user1 user1    26 Oct 27 07:24 text
 
+
 user1@lab:~$ find .
 .
 ./test.sh
@@ -403,6 +445,7 @@ user1@lab:~$ find .
 ./.swp
 ./.swn
 ./.test.sh.swo
+
 
 user1@lab:~$ find / | less
 /
@@ -452,11 +495,14 @@ user1@lab:~$ find / | less
 /media
 :
 
+
 user1@lab:~$ find ~ -name "text"
 /home/user1/text
 
+
 user1@lab:~$ find ~ -name "test.sh"
 /home/user1/test.sh
+
 
 user1@lab:/home$ find . -user user1
 ./user1
@@ -477,8 +523,10 @@ user1@lab:/home$ find . -user user1
 ./user1/.swn
 ./user1/.test.sh.swo
 
+
 user1@lab:/home$ find . -user user1 -name "text"
 ./user1/text
+
 
 отримайте список всіх man-статей із категорії 2 (системні виклики); 
 
@@ -532,6 +580,8 @@ SEE ALSO
        clone(2), execve(2), vfork(2), wait(2)
 
 Linux 1.2.9			  1995-06-10			       FORK(2)
+
+
 
 user1@lab:~$ man 2 dup2
 
@@ -594,6 +644,7 @@ SEE ALSO
 
 Linux 1.1.46			  1994-08-21				DUP(2)
 
+
 порахуйте, скільки разів у man-е по програмі grep зустрічається слово grep;
 
 user1@lab:~$ man -k grep
@@ -609,8 +660,10 @@ zegrep (1)           - search possibly compressed files for a regular expression
 zfgrep (1)           - search possibly compressed files for a regular expression
 zgrep (1)            - search possibly compressed files for a regular expression
 
+
 user1@lab:~$ man -f grep
 grep (1)             - print lines matching a pattern
+
 
 user1@lab:~$ man -f grep pwd whoami
 grep (1)             - print lines matching a pattern
@@ -625,17 +678,20 @@ user1@lab:~$ ps
  7688 pts/2    00:00:00 vim
 10192 pts/2    00:00:00 ps
 
+
 user1@lab:~$ ps -s
   UID   PID          PENDING          BLOCKED          IGNORED           CAUGHT STAT TTY        TIME COMMAND
  1000  7296 0000000000000000 0000000000010000 0000000000380004 000000004b817efb Ss   pts/2      0:00 -bash
  1000  7688 0000000000000000 0000000000000000 0000000000003000 00000001ef804eff T    pts/2      0:00 vim
  1000 10194 0000000000000000 0000000000000000 0000000000000000 00000001f3d1fef9 R+   pts/2      0:00 ps -s
- 
+
+
 user1@lab:~$ ps -t
   PID TTY      STAT   TIME COMMAND
  7296 pts/2    Ss     0:00 -bash
  7688 pts/2    T      0:00 vim
 10195 pts/2    R+     0:00 ps -t
+
 
 user1@lab:~$ ps -d
   PID TTY          TIME CMD
@@ -652,11 +708,13 @@ user1@lab:~$ ps -d
 10196 pts/2    00:00:00 ps
 25375 ?        00:00:00 (sd-pam)
 
+
 user1@lab:~$ ps -l
 F S   UID   PID  PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
 0 S  1000  7296  7293  0  80   0 -  5298 wait   pts/2    00:00:00 bash
 0 T  1000  7688  7296  0  80   0 - 13261 signal pts/2    00:00:00 vim
 0 R  1000 10199  7296  0  80   0 -  7005 -      pts/2    00:00:00 ps
+
 
 user1@lab:~$ ps -e
   PID TTY          TIME CMD
