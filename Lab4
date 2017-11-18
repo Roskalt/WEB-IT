@@ -138,3 +138,29 @@
 	baseURI: "https://jquery.com/"
 	bgColor: ""
 < undefined
+
+> console.dirxml(document);
+	#document
+	<!DOCTYPE html>
+	<!--[if IE 7 ]>		 <html class="no-js ie ie7 lte7 lte8 lte9" lang="en-US"> <![endif]-->
+	<!--[if IE 8 ]>		 <html class="no-js ie ie8 lte8 lte9" lang="en-US"> <![endif]-->
+	<!--[if IE 9 ]>		 <html class="no-js ie ie9 lte9>" lang="en-US"> <![endif]-->
+	<!--[if (gt IE 9)|!(IE)]><!-->
+	<html class="js multiplebgs boxshadow cssgradients wf-klavikaweb-n7-active wf-sourcecodepro-n4-active wf-sourcecodepro-n7-active wf-klavikaweb-i7-active wf-active" lang="en-US">
+	#shadow-root (open)<!--<![endif]-->
+	<head data-live-domain="jquery.com">…</head>
+	<body class="jquery home page page-id-5 page-template page-template-page-fullwidth page-template-page-fullwidth-php page-slug-index single-author singular">…</body>
+	</html>
+< undefined
+
+> inspect(document.body);
+<	<body class="jquery home page page-id-5 page-template page-template-page-fullwidth page-template-page-fullwidth-php page-slug-index single-author singular">
+	<header>…</header>
+	<div id="container">…</div>
+	<footer class="clearfix simple">…</footer>
+	<script>…</script>
+	<script type="text/javascript" src="//jquery.com/wp-includes/js/comment-reply.min.js?ver=4.5.2"></script>
+	<script type="text/javascript" src="//jquery.com/wp-includes/js/wp-embed.min.js?ver=4.5.2"></script>
+	<div id="cboxOverlay" style="display: none;"></div>
+	<div id="colorbox" class style="display: none;">…</div>
+	</body>
