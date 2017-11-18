@@ -10,6 +10,8 @@
 > 2 * ( 1 / 5 )
 < 0.4
 
+---------------------------------------------------------------
+
 > ['rostik','artem','ivan','naraz']
 < (4) ["rostik", "artem", "ivan", "naraz"]
        0: "rostik"
@@ -58,6 +60,8 @@
 > $_.length
 < 4
 
+---------------------------------------------------------------
+
 > $('img')
 < (7) [img, img, img, img, img, img, img, prevObject: jQuery.fn.init(1), context: document, selector: "img"]
 
@@ -77,6 +81,8 @@
   https://jquery.com/jquery-wp-content/themes/jquery/content/books/jquery-succinctly.jpg
 < undefined
 
+---------------------------------------------------------------
+
 > $x("//p")
 < (9) [p, p, p, p, p, p, p, p, p.copyright]
 
@@ -85,6 +91,8 @@
 
 > $x("//head")
 < [head]
+
+---------------------------------------------------------------
 
 > clear(); - ....
 
@@ -110,6 +118,8 @@
 	<link rel="stylesheet" href="//jquery.com/jquery-wp-content/themes/jquery/css/base.css?v=1">
 	<link rel="stylesheet" href="//jquery.com/jquery-wp-content/themes/jquery.com/style.css">
        ......................
+
+---------------------------------------------------------------
 
 > document.body;
 <	<body class="jquery home page page-id-5 page-template page-template-page-fullwidth page-template-page-fullwidth-php page-slug-index single-author singular">
@@ -153,6 +163,8 @@
 	</html>
 < undefined
 
+---------------------------------------------------------------
+
 > inspect(document.body);
 <	<body class="jquery home page page-id-5 page-template page-template-page-fullwidth page-template-page-fullwidth-php page-slug-index single-author singular">
 	<header>…</header>
@@ -164,3 +176,48 @@
 	<div id="cboxOverlay" style="display: none;"></div>
 	<div id="colorbox" class style="display: none;">…</div>
 	</body>
+
+---------------------------------------------------------------
+
+> getEventListeners(document);
+<	{DOMContentLoaded: Array(2), keydown: Array(1), click: Array(1)}
+		DOMContentLoaded: (2) [{…}, {…}]
+		click: [{…}]
+		keydown: [{…}]
+		__proto__: Object
+
+---------------------------------------------------------------
+
+> var player1 = { "name": "Adam", "level": 50 }
+< undefined
+
+> keys(player1);
+< (2) ["name", "level"]
+	0: "name"
+	1: "level"
+	length: 2
+	__proto__: Array(0)
+
+> values(player1);
+< (2) ["Adam", 50]
+	0: "Adam"
+	1: 50
+	length: 2
+	__proto__: Array(0)
+	
+---------------------------------------------------------------
+
+> function sum(x, y) {
+        return x + y;
+    }
+< undefined
+
+> monitor(sum);
+< undefined
+
+> sum(1, 2);
+	function sum called with arguments: 1, 2
+< 3
+
+---------------------------------------------------------------
+
