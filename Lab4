@@ -110,3 +110,31 @@
 	<link rel="stylesheet" href="//jquery.com/jquery-wp-content/themes/jquery/css/base.css?v=1">
 	<link rel="stylesheet" href="//jquery.com/jquery-wp-content/themes/jquery.com/style.css">
        ......................
+
+> document.body;
+<	<body class="jquery home page page-id-5 page-template page-template-page-fullwidth page-template-page-fullwidth-php page-slug-index single-author singular">
+		<header>…</header>
+		<div id="container">…</div>
+		<footer class="clearfix simple">…</footer>
+		<script>…</script>
+		<script type="text/javascript" src="//jquery.com/wp-includes/js/comment-reply.min.js?ver=4.5.2"></script>
+		<script type="text/javascript" src="//jquery.com/wp-includes/js/wp-embed.min.js?ver=4.5.2"></script>
+		<div id="cboxOverlay" style="display: none;"></div>
+		<div id="colorbox" class style="display: none;">…</div>
+	</body>
+
+> dir(document.body);
+	body.jquery.home.page.page-id-5.page-template.page-template-page-fullwidth.page-template-page-fullwidth-php.page-slug-index.single-author.singulara
+< undefined
+
+> console.dir(document)
+	#document
+	URL: "https://jquery.com/"
+	activeElement: body.jquery.home.page.page-id-5.page-template.page-template-page-fullwidth.page-template-page-fullwidth-php.page-slug-index.single-author.singular
+	alinkColor: ""
+	all: (373) [html.js.multiplebgs.boxshadow.cssgradients.wf-klavikaweb-n7-active.wf-sourcecodepro-n4-active.wf-sou…, head, script, meta, meta, title, meta, meta, meta, link, link, link, script, script, script, script, script, script, style, style, script, link, meta, link, link, body.jquery.home.page.page-id-5.page-template.page-template-page-fullwidth.page-template-page-fullwi…, header, section#global-nav, nav, div.constrain, ul.projects, li.project.jquery, a, li.project.jquery-ui, a, li.project.jquery-mobile, a, li.project.sizzlejs, a, li.project.qunitjs, a, ul.links.l_tinynav1, li, a, li.dropdown, a, ul, li, a, li, a, li, a, li, a, li, a, li, a, li.dropdown, a, ul.wide, li.dropdown, a, ul, li, a, li, a, li, a, li, a, li, a, li, a, li.dropdown, a, ul, li, a, li, a, li, a, li, a, li, a, li, a, div#container, div#logo-events.constrain.clearfix, h2.logo, a, aside, div#broadcast, nav#main.constrain.clearfix, div.menu-top-container, …]
+	anchors: []
+	applets: []
+	baseURI: "https://jquery.com/"
+	bgColor: ""
+< undefined
