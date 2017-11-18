@@ -135,6 +135,7 @@
 
 > dir(document.body);
 	body.jquery.home.page.page-id-5.page-template.page-template-page-fullwidth.page-template-page-fullwidth-php.page-slug-index.single-author.singulara
+	....
 < undefined
 
 > console.dir(document)
@@ -197,6 +198,7 @@
 	1: "level"
 	length: 2
 	__proto__: Array(0)
+	...
 
 > values(player1);
 < (2) ["Adam", 50]
@@ -204,6 +206,7 @@
 	1: 50
 	length: 2
 	__proto__: Array(0)
+	...
 	
 ---------------------------------------------------------------
 
@@ -218,6 +221,3 @@
 > sum(1, 2);
 	function sum called with arguments: 1, 2
 < 3
-
----------------------------------------------------------------
-
