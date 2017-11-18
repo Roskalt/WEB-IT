@@ -1,11 +1,15 @@
 > 2 + 3
-< 5 
+< 5
+
 > 2 * 5
 < 10
+
 > 1 / 5
 < 0.2
+
 > 2 * ( 1 / 5 )
 < 0.4
+
 > ['rostik','artem','ivan','naraz']
 < (4) ["rostik", "artem", "ivan", "naraz"]
        0: "rostik"
@@ -47,7 +51,62 @@
         Symbol(Symbol.iterator): ƒ values()
         Symbol(Symbol.unscopables): {copyWithin: true, entries: true, fill: true, find: true, findIndex: true, …}
         __proto__: Object
+
 > $_
 < (4) ["rostik", "artem", "ivan", "naraz"]
+
 > $_.length
 < 4
+
+> $('img')
+< (7) [img, img, img, img, img, img, img, prevObject: jQuery.fn.init(1), context: document, selector: "img"]
+
+> $('img').src
+< undefined
+
+> var images = $$('img');
+    for (each in images) {
+        console.log(images[each].src);
+    }
+  https://jquery.org/resources/members/neobux.png
+  https://jquery.org/resources/members/ibm.png
+  https://jquery.org/resources/members/maxcdn.png
+  https://jquery.org/resources/members/wordpress.png
+  https://jquery.com/jquery-wp-content/themes/jquery/content/books/learning-jquery-4th-ed.jpg
+  https://jquery.com/jquery-wp-content/themes/jquery/content/books/jquery-in-action.jpg
+  https://jquery.com/jquery-wp-content/themes/jquery/content/books/jquery-succinctly.jpg
+< undefined
+
+> $x("//p")
+< (9) [p, p, p, p, p, p, p, p, p.copyright]
+
+> $x("//p[a]")
+< (3) [p, p, p.copyright]
+
+> $x("//head")
+< [head]
+
+> clear(); - ....
+
+> $0
+< <head data-live-domain="jquery.com">…</head>
+
+> copy($0);
+< undefined
+......
+> <head data-live-domain="jquery.com"><script async="" src="https://engine.adzerk.net/ados.js?_=1511021326323"></script>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<title>jQuery</title>
+
+	<meta name="author" content="jQuery Foundation - jquery.org">
+	<meta name="description" content="jQuery: The Write Less, Do More, JavaScript Library">
+
+	<meta name="viewport" content="width=device-width">
+
+	<link rel="shortcut icon" href="//jquery.com/jquery-wp-content/themes/jquery.com/i/favicon.ico">
+
+	<link rel="stylesheet" href="//jquery.com/jquery-wp-content/themes/jquery/css/base.css?v=1">
+	<link rel="stylesheet" href="//jquery.com/jquery-wp-content/themes/jquery.com/style.css">
+       ......................
