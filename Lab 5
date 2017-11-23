@@ -1,0 +1,11 @@
+var gulp = require('gulp');
+var minifyCss = require('gulp-minify-css');
+
+gulp.task('mincss', function(){
+	return gulp.src('main.css')
+		.pipe(minifyCss())
+		.pipe(gulp.dest('main'));
+});
+gulp.watch('main.css', function(){
+console.log('seen');
+});
